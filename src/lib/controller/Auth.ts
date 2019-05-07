@@ -22,7 +22,7 @@ export default class AuthController extends BController {
         if (!p) {
             throw new Error(auth.Errors.E_PWD_EMPTY);
         }
-        if (MD5.password_verify(data.pwd, p, auth.Salt)) {
+        if (auth.Crypto.verify(pwd, p)) {
             await this._session('UID', uid);
             return uid;
         } else {
@@ -41,6 +41,45 @@ export default class AuthController extends BController {
 
     }
     async forget() {
-        
+
+    }
+    /**
+     * 在登陆成功的情况下修改密码需要原密码参与
+     * @param data 
+     */
+    async reset(data) {
+        let pwd = data[auth.Fields.PWD];
+        let opwd = data[auth.Fields.OldPWD];
+        if ('string' != typeof pwd) {
+            throw new Error(auth.Errors.E_PARAMS)
+        }
+        if (!auth.Verify.PWD.test(pwd)) {
+            throw new Error(auth.Errors.E_PARAMS_FAILD)
+        }
+        if ('string' != typeof opwd) {
+            throw new Error(auth.Errors.E_PARAMS)
+        }
+        if (!auth.Verify.PWD.test(opwd)) {
+            throw new Error(auth.Errors.E_PARAMS_FAILD)
+        }
+        let UID = await this.checkLogin();
+        let p = await this.M(Models.Pwd).where({ UID }).getFields('PWD');
+        if (auth.Crypto.verify(opwd, p)) {
+            await this.M(Models.Pwd).where({ UID }).save({ PWD: auth.Crypto.encode(pwd) });
+            return true;
+        } else {
+            //原始密码错误
+            throw new Error(auth.Errors.E_PWD_ERROR)
+        }
+    }
+    /**
+     * 检查是否登录
+     */
+    async checkLogin() {
+        let uid = await this._session('UID');
+        if (!uid) {
+            throw new Error(auth.Errors.E_NOT_LOGIN)
+        }
+        return uid;
     }
 }
