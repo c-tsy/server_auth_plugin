@@ -1,5 +1,5 @@
 import Controller from '@ctsy/controller/dist/controller'
-import { BController, CController } from '../lib/controller';
+import { CController } from '../lib/controller';
 /**
   * 权限 Rule
   * RID RID 自增序号(bigint)

@@ -41,6 +41,6 @@ export default class AuthController extends BController {
 
     }
     async forget() {
-
+        
     }
 }

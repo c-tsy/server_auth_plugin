@@ -45,6 +45,15 @@
     castle-function "^1.0.1"
     lodash "^4.17.11"
 
+"@ctsy/relation@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@ctsy/relation/-/relation-1.0.6.tgz#ae23668c7aa0e88c8dca1b0178b5676e1f0073b0"
+  integrity sha512-OH8tdamIhEs3vS3HiwzxVVukovUX/O30sWjUJXwN3TQyS45UOYITeMA6nLnTLd4bZdubBnPg7l7+gE7Oyanaqg==
+  dependencies:
+    "@ctsy/model" "^1.0.16"
+    castle-function "^1.0.1"
+    lodash "^4.17.11"
+
 "@ctsy/server_plugin@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@ctsy/server_plugin/-/server_plugin-1.0.0.tgz#6ac9053820179066a98ef70767d71656fe1f24cc"
