@@ -14,6 +14,10 @@ export default class AuthController extends BController {
         if ('string' != typeof pwd) {
             throw new Error(auth.Errors.E_PARAMS)
         }
+        let svcode = await this._session(auth.Fields.VCode);
+        if (svcode && svcode != vcode) {
+            throw new Error(auth.Errors.E_VCODE);
+        }
         let uid = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).getFields('UID');
         if (!uid) {
             throw new Error(auth.Errors.E_ACCOUNT_NOT_EXIST);
@@ -44,6 +48,9 @@ export default class AuthController extends BController {
     async relogin() {
         return await this._session('UID')
     }
+    /**
+     * 注册，如何让外部完成检测工作？
+     */
     async regist() {
 
     }

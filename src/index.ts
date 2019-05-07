@@ -48,6 +48,9 @@ export class Auth extends ModuleConfig {
     Verify = {
         PWD:/[\w\b]{6,}/
     }
+
+    
+
 }
 const auth = new Auth
 export default auth
