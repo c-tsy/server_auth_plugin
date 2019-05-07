@@ -36,12 +36,30 @@ export default class AuthController extends BController {
     }
     async relogin() {
         return await this._session('UID')
-     }
+    }
     async regist() {
 
     }
-    async forget() {
-
+    /**
+     * 忘记密码，通过验证码找回，验证码需要手动逻辑写入到session中用于读取
+     * @param data 
+     */
+    async forget(data) {
+        let pwd = data[auth.Fields.PWD];
+        if ('string' != typeof pwd) {
+            throw new Error(auth.Errors.E_PARAMS)
+        }
+        if (!auth.Verify.PWD.test(pwd)) {
+            throw new Error(auth.Errors.E_PARAMS_FAILD)
+        }
+        let vcode = data[auth.Fields.VCode];
+        if (vcode != await this._session(auth.Fields.VCode)) {
+            throw new Error(auth.Errors.E_VCODE);
+        }
+        let account = data[auth.Fields.Account];
+        let UID = await this.M(Models.Account).where({ Account: account }).getFields('UID');
+        await this.M(Models.Pwd).where({ UID }).save({ PWD: auth.Crypto.encode(pwd)})
+        return true;
     }
     /**
      * 在登陆成功的情况下修改密码需要原密码参与
