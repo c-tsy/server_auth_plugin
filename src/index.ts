@@ -10,7 +10,7 @@ export class Auth extends ModuleConfig {
     /**
      * 加密算法类
      */
-    Crypto: typeof Password = Password;
+    Crypto: Password = new Password('');
 
     /**
      * 字段定义
@@ -25,6 +25,10 @@ export class Auth extends ModuleConfig {
          */
         PWD: 'PWD',
         /**
+         * 原始密码字段
+         */
+        OldPWD:'OldPWD',
+        /**
          * 验证码
          */
         VCode: 'VCode',
@@ -36,7 +40,12 @@ export class Auth extends ModuleConfig {
         E_PARAMS: '参数错误',
         E_ACCOUNT_NOT_EXIST: '账号不存在',
         E_PWD_EMPTY: '密码不存在',
-        E_PWD_ERROR:'密码错误'
+        E_PWD_ERROR: '密码错误',
+        E_NOT_LOGIN: '未登录',
+        E_PARAMS_FAILD:'参数验证失败'
+    }
+    Verify = {
+        PWD:/[\w\b]{6,}/
     }
 }
 const auth = new Auth
