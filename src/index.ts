@@ -43,7 +43,9 @@ export class Auth extends ModuleConfig {
         E_PWD_ERROR: '密码错误',
         E_NOT_LOGIN: '未登录',
         E_PARAMS_FAILD: '参数验证失败',
-        E_VCODE:'验证码错误或已过期'
+        E_VCODE: '验证码错误或已过期',
+        E_REG_ERROR: '注册失败',
+        E_ACCOUNT_USED:'账号已被使用'
     }
     Verify = {
         Account:/^[\w\b_-]{5+}$/,
