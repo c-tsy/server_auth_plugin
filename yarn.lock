@@ -14,6 +14,13 @@
     mime "^2.4.0"
     mz "^2.7.0"
 
+"@ctsy/crypto@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@ctsy/crypto/-/crypto-1.0.5.tgz#6dded577405fcd0f6fba15cc991e299be2d70419"
+  integrity sha512-BLaz0xS7ToYEXZg3xsOP9nJkW7BOxyynOPdYo8HHS8ZKd2siFXroEMtOAUwkdQB5N5+2CPHUOMXMivyhkG38KA==
+  dependencies:
+    "@types/node" "^10.12.5"
+
 "@ctsy/model@1.0.*", "@ctsy/model@^1.0.15":
   version "1.0.15"
   resolved "https://registry.yarnpkg.com/@ctsy/model/-/model-1.0.15.tgz#8b81c471e2773905fc128394a9a0fcd15239e983"
@@ -57,6 +64,11 @@
   version "11.13.9"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.9.tgz#f80697caca7f7fb2526527a5c5a2743487f05ccc"
   integrity sha512-NJ4yuEVw5podZbINp3tEqUIImMSAEHaCXRiWCf3KC32l6hIKf0iPJEh2uZdT0fELfRYk310yLmMXqy2leZQUbg==
+
+"@types/node@^10.12.5":
+  version "10.14.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.6.tgz#9cbfcb62c50947217f4d88d4d274cc40c22625a9"
+  integrity sha512-Fvm24+u85lGmV4hT5G++aht2C5I4Z4dYlWZIh62FAfFO/TfzXtPpoLI6I7AuBWkIFqZCnhFOoTT7RjjaIL5Fjg==
 
 any-promise@^1.0.0:
   version "1.3.0"

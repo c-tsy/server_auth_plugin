@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@ctsy/controller": "^1.0.11",
+    "@ctsy/crypto": "^1.0.5",
     "@ctsy/relation": "^1.0.5",
     "@ctsy/server_plugin": "^1.0.0"
   },
