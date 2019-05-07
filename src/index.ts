@@ -46,10 +46,13 @@ export class Auth extends ModuleConfig {
         E_VCODE:'验证码错误或已过期'
     }
     Verify = {
-        PWD:/[\w\b]{6,}/
+        Account:/^[\w\b_-]{5+}$/,
+        PWD:/.{6,}/
     }
 
-    
+    Hook = {
+        Auth:''
+    }
 
 }
 const auth = new Auth
