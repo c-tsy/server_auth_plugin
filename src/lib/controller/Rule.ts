@@ -1,4 +1,5 @@
 import Controller from '@ctsy/controller/dist/controller'
+import { BController, CController } from '../lib/controller';
 /**
   * 权限 Rule
   * RID RID 自增序号(bigint)
@@ -9,7 +10,7 @@ import Controller from '@ctsy/controller/dist/controller'
   * 备注 Memo 字符250(char(250))
   * 排序 Sort 序号(bigint)
 */
-export default class Rule extends Controller{
+export default class Rule extends CController{
   get _KeywordTable(){
     return 'Rule'
   }

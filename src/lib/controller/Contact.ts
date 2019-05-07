@@ -1,4 +1,5 @@
 import Controller from '@ctsy/controller/dist/controller'
+import { BController, CController } from '../lib/controller';
 /**
   * 联系方式 Contact
   * 用户编号 UID 序号(bigint)
@@ -6,7 +7,7 @@ import Controller from '@ctsy/controller/dist/controller'
   * 值 V 字符50(char(50))
   * 配置 C 字符250(char(250))
 */
-export default class Contact extends Controller{
+export default class Contact extends CController{
   get _KeywordTable(){
     return 'Contact'
   }

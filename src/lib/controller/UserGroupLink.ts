@@ -1,4 +1,5 @@
 import Controller from '@ctsy/controller/dist/controller'
+import { CController } from '../lib/controller';
 /**
   * 用户分组 UserGroupLink
   * UGLID UGLID 自增序号(bigint)
@@ -7,7 +8,7 @@ import Controller from '@ctsy/controller/dist/controller'
   * 分组时间 CTime 时间日期(datetime)
   * 备注 Memo (char(250))
 */
-export default class UserGroupLink extends Controller{
+export default class UserGroupLink extends CController{
   get _KeywordTable(){
     return 'UserGroupLink'
   }

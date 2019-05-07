@@ -1,11 +1,12 @@
-import BaseController from '@ctsy/controller/dist/base_controller'
 import auth from '../..';
 import { Models } from '../iface/models';
 import { MD5 } from '@ctsy/crypto';
-export default class AuthController extends BaseController {
+import {BController} from '../lib/controller';
+export default class AuthController extends BController {
     async login(data) {
         let account = data[auth.Fields.Account];
         let pwd = data[auth.Fields.PWD];
+        //需要判断什么情况下必须用户输入验证码或者其他验证方式
         let vcode = data[auth.Fields.VCode];
         if ('string' != typeof account) {
             throw new Error(auth.Errors.E_PARAMS)

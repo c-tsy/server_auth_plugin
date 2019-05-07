@@ -1,4 +1,5 @@
 import Controller from '@ctsy/controller/dist/controller'
+import { CController } from '../lib/controller';
 /**
   * 用户 Users
   * 用户编号 UID 大数值自增(bigint)
@@ -7,7 +8,7 @@ import Controller from '@ctsy/controller/dist/controller'
   * 性别 Sex 状态值(tinyint(1))
   * Status Status 状态值(tinyint(1))
 */
-export default class Users extends Controller{
+export default class Users extends CController{
   get _KeywordTable(){
     return 'Users'
   }
