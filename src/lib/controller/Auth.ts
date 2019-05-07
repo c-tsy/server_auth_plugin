@@ -24,16 +24,23 @@ export default class AuthController extends BController {
         }
         if (auth.Crypto.verify(pwd, p)) {
             await this._session('UID', uid);
+            //怎么通知外部程序去完成诸如只允许在一个地方登录的问题
             return uid;
         } else {
             await this._session('UID', undefined);
             throw new Error(auth.Errors.E_PWD_ERROR)
         }
     }
+    /**
+     * 退出登录
+     */
     async logout() {
         await this._session('UID', undefined);
         return true;
     }
+    /**
+     * 重新登录
+     */
     async relogin() {
         return await this._session('UID')
     }
