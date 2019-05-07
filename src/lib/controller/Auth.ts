@@ -7,7 +7,10 @@ import Users from '../class/Users';
 import Account from '../class/Account';
 import Pwd from '../class/Pwd';
 export default class AuthController extends BController {
-    
+    /**
+     * 登陆
+     * @param data 
+     */
     async login(data) {
         let account = data[auth.Fields.Account];
         let pwd = data[auth.Fields.PWD];
@@ -35,7 +38,8 @@ export default class AuthController extends BController {
         if (auth.Crypto.verify(pwd, p)) {
             await this._session('UID', uid);
             await hook_check(this._ctx, 'Auth', HookType.after, 'login', data)
-            //怎么通知外部程序去完成诸如只允许在一个地方登录的问题
+            //通知外部程序去完成诸如只允许在一个地方登录的问题
+            //TODO 将用户的权限及权限组信息写入Session中
             return uid;
         } else {
             await this._session('UID', undefined);
@@ -177,5 +181,16 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_NOT_LOGIN)
         }
         return uid;
+    }
+    /**
+     * 管理员重置账户
+     * @param data 
+     */
+    async areset(data) {
+        let UID = data.UID;
+        if (!(UID > 0)) {
+            throw new Error(auth.Errors.E_PARAMS);
+        }
+        //TODO 检查权限是否存在
     }
 }
