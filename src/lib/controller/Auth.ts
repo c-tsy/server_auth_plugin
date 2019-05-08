@@ -53,13 +53,14 @@ export default class AuthController extends BController {
      */
     async logout() {
         await this._session('UID', undefined);
+        await this._session('User', undefined);
         return true;
     }
     /**
      * 重新登录
      */
     async relogin() {
-        return await this._session('UID')
+        return await this._session('User')
     }
     /**
      * 注册，如何让外部完成检测工作？
