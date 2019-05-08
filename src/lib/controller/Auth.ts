@@ -182,6 +182,11 @@ export default class AuthController extends BController {
         }
         return uid;
     }
+    async checkRule(rule:string) {
+        let uid = await this.checkLogin();
+        //TODO 检查权限
+        return uid;
+    }
     /**
      * 管理员重置账户
      * @param data 
@@ -192,5 +197,7 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_PARAMS);
         }
         //TODO 检查权限是否存在
+        let loginedUID = await this.checkRule('');
+        
     }
 }
