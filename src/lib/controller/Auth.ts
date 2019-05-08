@@ -27,7 +27,8 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_VCODE);
         }
         await hook_check(this._ctx,'Auth',HookType.before,'login',data)
-        let uid = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).getFields('UID');
+        let user = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).find();
+        let uid = user?user.UID:0;
         if (!uid) {
             throw new Error(auth.Errors.E_ACCOUNT_NOT_EXIST);
         }
@@ -40,6 +41,7 @@ export default class AuthController extends BController {
             await hook_check(this._ctx, 'Auth', HookType.after, 'login', data)
             //通知外部程序去完成诸如只允许在一个地方登录的问题
             //TODO 将用户的权限及权限组信息写入Session中
+            await this._session('User', user);
             return uid;
         } else {
             await this._session('UID', undefined);
@@ -107,7 +109,7 @@ export default class AuthController extends BController {
                     this.M(Models.Pwd).add(upwd)
                 ])
                 await hook_check(this._ctx, 'Auth', HookType.after, 'regist', user)
-                return user.UID;
+                return user;
             }
         } catch (error) {
             throw new Error(auth.Errors.E_REG_ERROR);
@@ -128,7 +130,7 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_PARAMS_FAILD)
         }
         let vcode = data[auth.Fields.VCode];
-        if (vcode != await this._session(auth.Fields.VCode)) {
+        if (vcode !== await this._session(auth.Fields.VCode)) {
             throw new Error(auth.Errors.E_VCODE);
         }
         let account = data[auth.Fields.Account];
