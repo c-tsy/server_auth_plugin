@@ -9,6 +9,7 @@ import Relation, { R } from "@ctsy/relation";
 */
 export default class Users extends Relation{    
     constructor(ctx,table){
-        super(ctx,table)
+      super(ctx, table)
+      
     }
 }

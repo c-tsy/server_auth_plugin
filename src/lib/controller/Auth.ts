@@ -66,7 +66,7 @@ export default class AuthController extends BController {
      * 注册，如何让外部完成检测工作？
      */
     async regist(data) {
-        let account = data[auth.Fields.Account];
+        let account:string = data[auth.Fields.Account];
         let pwd = data[auth.Fields.PWD];
         //需要判断什么情况下必须用户输入验证码或者其他验证方式
         let vcode = data[auth.Fields.VCode];
@@ -95,13 +95,15 @@ export default class AuthController extends BController {
         if ('object' == typeof r) {
             reg = Object.assign(reg, r);
         }
+        await this.startTrans();
         try {
             let user = await this.M(Models.Users).add(reg);
             if (user.UID > 0) {
-                let account = new Account()
-                account.UID = user.UID;
-                account.Type = 'PWD';
-                account.Status = 1;
+                let ac = new Account()
+                ac.Account = account;
+                ac.UID = user.UID;
+                ac.Type = 'PWD';
+                ac.Status = 1;
                 let upwd = new Pwd();
                 upwd.UID = user.UID;
                 upwd.PWD = auth.Crypto.encode(pwd);
@@ -109,10 +111,15 @@ export default class AuthController extends BController {
                     this.M(Models.Account).add(account),
                     this.M(Models.Pwd).add(upwd)
                 ])
+                await this.commit()
                 await hook_check(this._ctx, 'Auth', HookType.after, 'regist', user)
                 return user;
+            } else {
+                await this.rollback()
+                throw new Error(auth.Errors.E_REG_ERROR);
             }
         } catch (error) {
+            await this.rollback()
             throw new Error(auth.Errors.E_REG_ERROR);
         } finally {
             

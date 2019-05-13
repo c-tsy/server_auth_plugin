@@ -13,7 +13,7 @@ CREATE TABLE `auth_account`  (
   PRIMARY KEY (`UID`) USING BTREE,
   UNIQUE INDEX `u_account`(`Account`) USING BTREE,
   INDEX `account_where`(`Account`, `Type`, `Status`) USING BTREE,
-  CONSTRAINT `FK_account_user` FOREIGN KEY (`UID`) REFERENCES `users` (`UID`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `FK_account_user` FOREIGN KEY (`UID`) REFERENCES `auth_users` (`UID`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -32,7 +32,7 @@ CREATE TABLE `auth_contact`  (
   `V` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `C` char(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`UID`, `Nick`, `T`, `V`) USING BTREE,
-  CONSTRAINT `FK_Reference_8` FOREIGN KEY (`UID`) REFERENCES `users` (`UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_Reference_8` FOREIGN KEY (`UID`) REFERENCES `auth_users` (`UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用于支持各种通信方式的验证、通知等，需要配置C字段，根据不同人和不同的驱动来定义' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -43,7 +43,7 @@ CREATE TABLE `auth_pwd`  (
   `UID` bigint(20) UNSIGNED NOT NULL,
   `PWD` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`UID`) USING BTREE,
-  CONSTRAINT `FK_Reference_7` FOREIGN KEY (`UID`) REFERENCES `users` (`UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_Reference_7` FOREIGN KEY (`UID`) REFERENCES `auth_users` (`UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -65,8 +65,8 @@ CREATE TABLE `auth_rule`  (
   `Sort` bigint(20) NOT NULL,
   PRIMARY KEY (`RID`) USING BTREE,
   UNIQUE INDEX `u_rule_rgid`(`RGID`, `Title`) USING BTREE,
-  CONSTRAINT `FK_rule_group` FOREIGN KEY (`RGID`) REFERENCES `rule_group` (`RGID`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `FK_rule_group` FOREIGN KEY (`RGID`) REFERENCES `auth_rule_group` (`RGID`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rule
@@ -88,7 +88,7 @@ CREATE TABLE `auth_rule_group`  (
   PRIMARY KEY (`RGID`) USING BTREE,
   UNIQUE INDEX `u_rule_group_title`(`Title`) USING BTREE,
   INDEX `AK_rule_group_sort`(`Sort`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rule_group
@@ -111,7 +111,7 @@ CREATE TABLE `auth_user_group`  (
   PRIMARY KEY (`UGID`) USING BTREE,
   UNIQUE INDEX `u_group_title`(`Title`) USING BTREE,
   INDEX `AK_user_group_sort`(`Sort`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_group
@@ -135,9 +135,9 @@ CREATE TABLE `auth_user_group_link`  (
   PRIMARY KEY (`UGLID`) USING BTREE,
   UNIQUE INDEX `u_ugl`(`UID`, `UGID`) USING BTREE,
   INDEX `FK_user_group_group`(`UGID`) USING BTREE,
-  CONSTRAINT `FK_user_group_group` FOREIGN KEY (`UGID`) REFERENCES `user_group` (`UGID`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `FK_user_group_user` FOREIGN KEY (`UID`) REFERENCES `users` (`UID`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `FK_user_group_group` FOREIGN KEY (`UGID`) REFERENCES `auth_user_group` (`UGID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_user_group_user` FOREIGN KEY (`UID`) REFERENCES `auth_users` (`UID`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_group_link
@@ -155,9 +155,9 @@ CREATE TABLE `auth_user_group_rule_link`  (
   PRIMARY KEY (`UGRL`) USING BTREE,
   UNIQUE INDEX `u_ugrl`(`UGID`, `RID`) USING BTREE,
   INDEX `FK_user_group_rule_rule`(`RID`) USING BTREE,
-  CONSTRAINT `FK_user_group_rule_link` FOREIGN KEY (`UGID`) REFERENCES `user_group` (`UGID`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `FK_user_group_rule_rule` FOREIGN KEY (`RID`) REFERENCES `rule` (`RID`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `FK_user_group_rule_link` FOREIGN KEY (`UGID`) REFERENCES `auth_user_group` (`UGID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_user_group_rule_rule` FOREIGN KEY (`RID`) REFERENCES `auth_rule` (`RID`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_group_rule_link
@@ -178,7 +178,7 @@ CREATE TABLE `auth_users`  (
   `Status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '-1禁用，1正常',
   PRIMARY KEY (`UID`) USING BTREE,
   UNIQUE INDEX `u_nick`(`Nick`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
