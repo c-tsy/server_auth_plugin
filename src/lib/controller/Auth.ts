@@ -41,12 +41,19 @@ export default class AuthController extends BController {
             await hook_check(this._ctx, 'Auth', HookType.after, 'login', data)
             //通知外部程序去完成诸如只允许在一个地方登录的问题
             //TODO 将用户的权限及权限组信息写入Session中
-            await this._session('User', user);
+            // await this._session('User', user);
             return uid;
         } else {
             await this._session('UID', undefined);
             throw new Error(auth.Errors.E_PWD_ERROR)
         }
+    }
+    /**
+     * 获取登录用户信息
+     */
+    async info() {
+        let UID = await this.checkLogin();
+        return await this.M(Models.Users).where({UID}).find()
     }
     /**
      * 退出登录
