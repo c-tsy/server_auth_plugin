@@ -115,7 +115,7 @@ export default class AuthController extends BController {
                 upwd.UID = user.UID;
                 upwd.PWD = auth.Crypto.encode(pwd);
                 await Promise.all([
-                    this.M(Models.Account).add(account),
+                    this.M(Models.Account).add(ac),
                     this.M(Models.Pwd).add(upwd)
                 ])
                 await this.commit()
