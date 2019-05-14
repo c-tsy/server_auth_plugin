@@ -6,6 +6,7 @@ import { hook_check, HookType } from '../utils';
 import Users from '../class/Users';
 import Account from '../class/Account';
 import Pwd from '../class/Pwd';
+import UserGroupLink from '../class/UserGroupLink';
 export default class AuthController extends BController {
     /**
      * 登陆
@@ -42,7 +43,9 @@ export default class AuthController extends BController {
             //通知外部程序去完成诸如只允许在一个地方登录的问题
             //TODO 将用户的权限及权限组信息写入Session中
             // await this._session('User', user);
-            return uid;
+            let user = await this.M(Models.Users).where({ UID: uid }).find()
+            await this._session('User', user);
+            return user;
         } else {
             await this._session('UID', undefined);
             throw new Error(auth.Errors.E_PWD_ERROR)
@@ -114,9 +117,15 @@ export default class AuthController extends BController {
                 let upwd = new Pwd();
                 upwd.UID = user.UID;
                 upwd.PWD = auth.Crypto.encode(pwd);
+                let ug = new UserGroupLink()
+                ug.UID = user.UID;
+                ug.CTime = new Date;
+                ug.UGID = auth.Default.UserGroupID;
+                ug.Memo = auth.Default.UserGroupMemo;
                 await Promise.all([
                     this.M(Models.Account).add(ac),
-                    this.M(Models.Pwd).add(upwd)
+                    this.M(Models.Pwd).add(upwd),
+                    this.M(Models.UserGroupLink).add(ug)
                 ])
                 await this.commit()
                 await hook_check(this._ctx, 'Auth', HookType.after, 'regist', user)

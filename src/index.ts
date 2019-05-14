@@ -52,11 +52,14 @@ export class Auth extends ModuleConfig {
         Account:/^[\w\b_-]{5+}$/,
         PWD:/.{6,}/
     }
-
+    
     Hook = {
         Auth:''
     }
-
+    Default: {
+        UserGroupID: 1,
+        UserGroupMemo:''
+    }
 }
 const auth = new Auth
 export default auth
