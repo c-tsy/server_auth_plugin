@@ -83,7 +83,7 @@ export default class AuthController extends BController {
      * 重新登录
      */
     async relogin() {
-        return await this._session('User')
+        return await this._session('User')||0
     }
     /**
      * 注册，如何让外部完成检测工作？
