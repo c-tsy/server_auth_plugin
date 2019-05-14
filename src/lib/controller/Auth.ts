@@ -38,13 +38,26 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_PWD_EMPTY);
         }
         if (auth.Crypto.verify(pwd, p)) {
-            await this._session('UID', uid);
-            await hook_check(this._ctx, 'Auth', HookType.after, 'login', data)
+            let [user,ugids] = await Promise.all([
+                this.M(Models.Users).where({ UID: uid }).find(),
+                this.M(Models.UserGroupLink).where({ UID: uid }).getFields('UGID',true),
+                this._session('UID', uid),
+                hook_check(this._ctx, 'Auth', HookType.after, 'login', data),
+            ])
+            let group = ugids.length > 0 ? await this.M(Models.UserGroup).where({ UGID: { in: ugids } }).select() : [];
+            user.UGIDs = ugids;
+            user.Groups = group;
+            let [r] = await Promise.all([                
+                this._session('User', user),
+                this._session('UGIDS', ugids),
+            ])
+            // await this._session('UID', uid);
+            // await hook_check(this._ctx, 'Auth', HookType.after, 'login', data)
             //通知外部程序去完成诸如只允许在一个地方登录的问题
             //TODO 将用户的权限及权限组信息写入Session中
             // await this._session('User', user);
-            let user = await this.M(Models.Users).where({ UID: uid }).find()
-            await this._session('User', user);
+            // let user = await this.M(Models.Users).where({ UID: uid }).find()
+            // await this._session('User', user);
             return user;
         } else {
             await this._session('UID', undefined);
