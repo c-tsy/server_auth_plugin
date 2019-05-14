@@ -75,8 +75,8 @@ export default class AuthController extends BController {
      * 退出登录
      */
     async logout() {
-        await this._session('UID', undefined);
-        await this._session('User', undefined);
+        await this._session('UID', null);
+        await this._session('User', null);
         return true;
     }
     /**
