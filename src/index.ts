@@ -32,6 +32,10 @@ export class Auth extends ModuleConfig {
          * 验证码
          */
         VCode: 'VCode',
+        /**
+         * 权限字段名称
+         */
+        Permission:'Permission',
     }
     /**
      * 错误提示信息

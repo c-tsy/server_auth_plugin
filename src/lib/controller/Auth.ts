@@ -64,7 +64,7 @@ export default class AuthController extends BController {
             for(let i = 0; i < rules.length; i++) {
                 rmap[rules[i].Rule] = [rules[i].RID,rules[i].Title]
             }
-            await this._session('Permissions',rmap)
+            await this._session(auth.Fields.Permission,rmap)
             return user;
         } else {
             await this._session('UID', undefined);
@@ -239,9 +239,9 @@ export default class AuthController extends BController {
      * @param param0 
      */
     async checkRule(data:{Rule:string}) {
-        let uid = await this.checkLogin();
+        await this.checkLogin();
         //TODO 检查权限
-        return !!(await this._session('Permissions'))[data.Rule];
+        return !!(await this._session(auth.Fields.Permission))[data.Rule];
     }
     /**
      * 管理员重置账户
