@@ -59,10 +59,10 @@ export default class AuthController extends BController {
             // let user = await this.M(Models.Users).where({ UID: uid }).find()
             // await this._session('User', user);
             let rids = ugids.length > 0 ? await this.M(Models.UserGroupRuleLink).where({UGID: {in: ugids}}).getFields('RID',true):[]
-            let rules = rids.length > 0 ? await this.M(Models.Rule).where({RID: {in: rids}}).fields('RID,Rule').select():[]
+            let rules = rids.length > 0 ? await this.M(Models.Rule).where({RID: {in: rids}}).fields('RID,Title,Rule').select():[]
             let rmap = {}
             for(let i = 0; i < rules.length; i++) {
-                rmap[rules[i].Rule] = rules[i].RID 
+                rmap[rules[i].Rule] = [rules[i].RID,rules[i].Title]
             }
             await this._session('Permissions',rmap)
             return user;
@@ -70,6 +70,12 @@ export default class AuthController extends BController {
             await this._session('UID', undefined);
             throw new Error(auth.Errors.E_PWD_ERROR)
         }
+    }
+    /**
+     * 获取我的权限
+     */
+    async getPermissions() {
+        return await this._session('Persmissions')
     }
     /**
      * 获取登录用户信息
