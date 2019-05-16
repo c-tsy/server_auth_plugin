@@ -221,7 +221,11 @@ export default class AuthController extends BController {
         }
         return uid;
     }
-    async checkRule(rule:string) {
+    /**
+     * 检查权限
+     * @param param0 
+     */
+    async checkRule({Rule:string}) {
         let uid = await this.checkLogin();
         //TODO 检查权限
         return uid;
