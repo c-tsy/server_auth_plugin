@@ -1,8 +1,8 @@
 import BaseController from '@ctsy/controller/dist/base_controller';
 import { Models } from "../iface/models"
 import auth from '../..'
-import { BController } from '../lib/controller';
-export default class Group extends BController{
+import { CController } from '../lib/controller';
+export default class Group extends CController{
     /**
      * 获取我的用户组
      */
@@ -22,6 +22,9 @@ export default class Group extends BController{
         g['Memo'] = data.Memo
         g['PUGID'] = 0
         g['EUGID'] = 0
+        // let g = {
+        //     Title: data.Title
+        // }
         let group = await this.M(Models.UserGroup).add(g)
         return group
     }

@@ -225,25 +225,6 @@ export default class AuthController extends BController {
         }
     }
     /**
-     * 检查是否登录
-     */
-    async checkLogin() {
-        let uid = await this._session('UID');
-        if (!uid) {
-            throw new Error(auth.Errors.E_NOT_LOGIN)
-        }
-        return uid;
-    }
-    /**
-     * 检查权限
-     * @param param0 
-     */
-    async checkRule(data:{Rule:string}) {
-        await this.checkLogin();
-        //TODO 检查权限
-        return !!(await this._session(auth.Fields.Permission))[data.Rule];
-    }
-    /**
      * 管理员重置账户
      * @param data 
      */
@@ -253,7 +234,7 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_PARAMS);
         }
         //TODO 检查权限是否存在
-        let loginedUID = await this.checkRule('');
+        // let loginedUID = await this.checkRule('');
         
     }
 }
