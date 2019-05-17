@@ -1,8 +1,7 @@
-import BaseController from '@ctsy/controller/dist/base_controller';
 import { Models } from "../iface/models"
 import auth from '../..'
 import { BController } from '../lib/controller';
-export default class UserGroupLink extends BController{
+export default class UserGroupRuleLink extends BController{
     /**
      * 增加用户组权限
      * 
