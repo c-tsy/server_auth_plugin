@@ -8,16 +8,14 @@ export default class Group extends BController{
      */
     async my(data) {
         let ugids = await this.M(Models.UserGroupLink).where({UID: data[auth.Fields.UID]}).select()
-        let groups = ugids.length>0? await this.M(Models.UserGroup).where({UGID: {in: ugids}}).select() : []
-        return groups
+        return ugids.length>0? await this.M(Models.UserGroup).where({UGID: {in: ugids}}).select() : []
+        
     }
     /**
      * 增加用户组
      * 已知该用户组的父组号名,继承组号
      */
     async addGroup(data:{Title: string, Sort: number, Memo: string}) {
-        // let pid = await this.M(Models.UserGroup).where({Title: data['PName']}).getFields('UGID',true)
-        // let epid = await this.M(Models.UserGroup).where({Title: data['EName']}).getFields('UGID',true)
         let g = {}
         g['Title'] = data.Title
         g['Sort'] = data.Sort
