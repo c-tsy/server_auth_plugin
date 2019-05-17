@@ -36,6 +36,10 @@ export class Auth extends ModuleConfig {
          * 权限字段名称
          */
         Permission:'Permission',
+        /**
+         * 用户编号
+         */
+        UID: 'UID'
     }
     /**
      * 错误提示信息
