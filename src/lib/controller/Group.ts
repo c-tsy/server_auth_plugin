@@ -15,7 +15,7 @@ export default class Group extends BController{
      * 增加用户组
      * 已知该用户组的父组号名,继承组号
      */
-    async addGroup(data) {
+    async addGroup(data:{Title: string, Sort: number, Memo: string}) {
         // let pid = await this.M(Models.UserGroup).where({Title: data['PName']}).getFields('UGID',true)
         // let epid = await this.M(Models.UserGroup).where({Title: data['EName']}).getFields('UGID',true)
         let g = {}
@@ -39,14 +39,14 @@ export default class Group extends BController{
      * 查询用户组
      * @param data 
      */
-    async findGroup(data) {
-        return await this.M(Models.UserGroup).where({Title: data.Title}).find()
+    async findGroup(data: {UGID: number}) {
+        return await this.M(Models.UserGroup).where({UGID: data.UGID}).find()
     }
 
     /**
      * 删除用户组
      */
-    async delGroup(data) {
-        return await this.M(Models.UserGroup).where({Title: data.Title}).del()
+    async delGroup(data: {UGID: number}) {
+        return await this.M(Models.UserGroup).where({UGID: data.UGID}).del()
     }
 }
