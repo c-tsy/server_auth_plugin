@@ -27,7 +27,7 @@ export default {
         defaultValue: 0,
         allowNull: false
     },
-    W: {
+    U: {
         type: DbDataType.tinyint(1),
         primaryKey: false,
         autoIncrement: false,
@@ -41,7 +41,7 @@ export default {
         defaultValue: 0,
         allowNull: false
     },
-    T: {
+    O: {
         type: DbDataType.tinyint(1),
         primaryKey: false,
         autoIncrement: false,

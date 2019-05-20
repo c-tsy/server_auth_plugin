@@ -58,11 +58,11 @@ export default class AuthController extends BController {
             // await this._session('User', user);
             // let user = await this.M(Models.Users).where({ UID: uid }).find()
             // await this._session('User', user);
-            let rids = ugids.length > 0 ? await this.M(Models.UserGroupRuleLink).where({ UGID: { in: ugids } }).getFields('RID,W,G,T', true) : []
+            let rids = ugids.length > 0 ? await this.M(Models.UserGroupRuleLink).where({ UGID: { in: ugids } }).getFields('RID,U,G,O', true) : []
             let rules = rids.length > 0 ? await this.M(Models.Rule).where({ RID: { in: Object.keys(rids) } }).fields('RID,Title,Rule').select() : []
             let rmap = {}
             for (let i = 0; i < rules.length; i++) {
-                rmap[rules[i].Rule] = [rules[i].RID, rules[i].Title, rids[i].W, rids[i].G, rids[i].T]
+                rmap[rules[i].Rule] = [rules[i].RID, rules[i].Title, rids[i].U, rids[i].G, rids[i].O]
             }
             await this._session(auth.Fields.Permission, rmap)
             return user;
