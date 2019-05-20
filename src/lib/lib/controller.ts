@@ -2,7 +2,7 @@ import BaseController from '@ctsy/controller/dist/base_controller';
 import Controller from '@ctsy/controller/dist/controller';
 import { R } from '@ctsy/relation';
 import auth from '../..';
-export class BController extends BaseController{
+export class BController extends BaseController {
     _prefix: any = 'auth_'
 
     /**
@@ -22,7 +22,7 @@ export class BController extends BaseController{
     async checkRule(data: { Rule: string }) {
         await this.checkLogin();
         //TODO 检查权限
-        return !!(await this._session(auth.Fields.Permission))[data.Rule];
+        return (await this._session(auth.Fields.Permission))[data.Rule];
     }
     async R(RelationName) {
         return await R(this._ctx, RelationName, this._prefix);

@@ -5,26 +5,47 @@ import { DbDataType } from "@ctsy/model";
   * UGID UGID 序号(bigint)
   * RID RID 序号(bigint)
 */
-export default {    
-    UGRL:{
-        type:DbDataType.bigint,
-        primaryKey:true,
-        autoIncrement:true,
-        defaultValue:0,
-        allowNull:false
-    },    
-    UGID:{
-        type:DbDataType.bigint,
-        primaryKey:false,
-        autoIncrement:false,
-        defaultValue:0,
-        allowNull:false
-    },    
-    RID:{
-        type:DbDataType.bigint,
-        primaryKey:false,
-        autoIncrement:false,
-        defaultValue:0,
-        allowNull:false
+export default {
+    UGRL: {
+        type: DbDataType.bigint,
+        primaryKey: true,
+        autoIncrement: true,
+        defaultValue: 0,
+        allowNull: false
+    },
+    UGID: {
+        type: DbDataType.bigint,
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 0,
+        allowNull: false
+    },
+    RID: {
+        type: DbDataType.bigint,
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 0,
+        allowNull: false
+    },
+    W: {
+        type: DbDataType.tinyint(1),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 0,
+        allowNull: false
+    },
+    G: {
+        type: DbDataType.tinyint(1),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 0,
+        allowNull: false
+    },
+    T: {
+        type: DbDataType.tinyint(1),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 0,
+        allowNull: false
     },
 }

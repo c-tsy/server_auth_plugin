@@ -1,7 +1,7 @@
 import auth from '../..';
 import { Models } from '../iface/models';
 import { MD5 } from '@ctsy/crypto';
-import {BController} from '../lib/controller';
+import { BController } from '../lib/controller';
 import { hook_check, HookType } from '../utils';
 import Users from '../class/Users';
 import Account from '../class/Account';
@@ -27,9 +27,9 @@ export default class AuthController extends BController {
         if (svcode && svcode != vcode) {
             throw new Error(auth.Errors.E_VCODE);
         }
-        await hook_check(this._ctx,'Auth',HookType.before,'login',data)
+        await hook_check(this._ctx, 'Auth', HookType.before, 'login', data)
         let user = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).find();
-        let uid = user?user.UID:0;
+        let uid = user ? user.UID : 0;
         if (!uid) {
             throw new Error(auth.Errors.E_ACCOUNT_NOT_EXIST);
         }
@@ -38,16 +38,16 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_PWD_EMPTY);
         }
         if (auth.Crypto.verify(pwd, p)) {
-            let [user,ugids] = await Promise.all([
+            let [user, ugids] = await Promise.all([
                 this.M(Models.Users).where({ UID: uid }).find(),
-                this.M(Models.UserGroupLink).where({ UID: uid }).getFields('UGID',true),
+                this.M(Models.UserGroupLink).where({ UID: uid }).getFields('UGID', true),
                 this._session('UID', uid),
                 hook_check(this._ctx, 'Auth', HookType.after, 'login', data),
             ])
             let group = ugids.length > 0 ? await this.M(Models.UserGroup).where({ UGID: { in: ugids } }).select() : [];
             user.UGIDs = ugids;
             user.Groups = group;
-            let [r] = await Promise.all([                
+            let [r] = await Promise.all([
                 this._session('User', user),
                 this._session('UGIDS', ugids),
             ])
@@ -58,13 +58,13 @@ export default class AuthController extends BController {
             // await this._session('User', user);
             // let user = await this.M(Models.Users).where({ UID: uid }).find()
             // await this._session('User', user);
-            let rids = ugids.length > 0 ? await this.M(Models.UserGroupRuleLink).where({UGID: {in: ugids}}).getFields('RID',true):[]
-            let rules = rids.length > 0 ? await this.M(Models.Rule).where({RID: {in: rids}}).fields('RID,Title,Rule').select():[]
+            let rids = ugids.length > 0 ? await this.M(Models.UserGroupRuleLink).where({ UGID: { in: ugids } }).getFields('RID,W,G,T', true) : []
+            let rules = rids.length > 0 ? await this.M(Models.Rule).where({ RID: { in: Object.keys(rids) } }).fields('RID,Title,Rule').select() : []
             let rmap = {}
-            for(let i = 0; i < rules.length; i++) {
-                rmap[rules[i].Rule] = [rules[i].RID,rules[i].Title]
+            for (let i = 0; i < rules.length; i++) {
+                rmap[rules[i].Rule] = [rules[i].RID, rules[i].Title, rids[i].W, rids[i].G, rids[i].T]
             }
-            await this._session(auth.Fields.Permission,rmap)
+            await this._session(auth.Fields.Permission, rmap)
             return user;
         } else {
             await this._session('UID', undefined);
@@ -82,7 +82,7 @@ export default class AuthController extends BController {
      */
     async info() {
         let UID = await this.checkLogin();
-        return await this.M(Models.Users).where({UID}).find()
+        return await this.M(Models.Users).where({ UID }).find()
     }
     /**
      * 退出登录
@@ -96,13 +96,13 @@ export default class AuthController extends BController {
      * 重新登录
      */
     async relogin() {
-        return await this._session('User')||{UID:0}
+        return await this._session('User') || { UID: 0 }
     }
     /**
      * 注册，如何让外部完成检测工作？
      */
     async regist(data) {
-        let account:string = data[auth.Fields.Account];
+        let account: string = data[auth.Fields.Account];
         let pwd = data[auth.Fields.PWD];
         //需要判断什么情况下必须用户输入验证码或者其他验证方式
         let vcode = data[auth.Fields.VCode];
@@ -126,7 +126,7 @@ export default class AuthController extends BController {
         let reg = new Users();
         reg.Name = data.Name || '匿名'
         reg.Sex = data.Sex || -1
-        reg.Nick=data.Nick||'匿名'
+        reg.Nick = data.Nick || '匿名'
         let r = await hook_check(this._ctx, 'Auth', HookType.before, 'regist', data)
         if ('object' == typeof r) {
             reg = Object.assign(reg, r);
@@ -164,7 +164,7 @@ export default class AuthController extends BController {
             await this.rollback()
             throw new Error(auth.Errors.E_REG_ERROR);
         } finally {
-            
+
         }
     }
     /**
@@ -235,6 +235,6 @@ export default class AuthController extends BController {
         }
         //TODO 检查权限是否存在
         // let loginedUID = await this.checkRule('');
-        
+
     }
 }
