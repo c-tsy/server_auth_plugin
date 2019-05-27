@@ -180,7 +180,7 @@ CREATE TABLE `auth_users`  (
   `Sex` tinyint(1) NOT NULL,
   `Status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '-1禁用，1正常',
   `Channel` char(20) NOT NULL DEFAULT "",
-  `PUID`  bigint(20) NOT NULL DEFAULT 1
+  `PUID`  bigint(20) NOT NULL DEFAULT 1,
   PRIMARY KEY (`UID`) USING BTREE,
   UNIQUE INDEX `u_nick`(`Nick`) USING BTREE
 ) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
@@ -188,7 +188,7 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `auth_users` VALUES (1, 'admin', 'admin', 1, 1);
+INSERT INTO `auth_users` VALUES (1, 'admin', 'admin', 1, 1,"",1);
 
 -- ----------------------------
 -- View structure for login_check

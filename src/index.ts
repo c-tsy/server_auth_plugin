@@ -50,7 +50,8 @@ export class Auth extends ModuleConfig {
         /**
          * 注册时必须有推介人？
          */
-        RegistMustPUID: true,
+        RegistMustPUID: false,
+        RegistMustVCode: false
     }
 
     /**

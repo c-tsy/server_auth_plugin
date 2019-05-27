@@ -123,6 +123,9 @@ export default class AuthController extends BController {
         if (svcode && svcode != vcode) {
             throw new Error(auth.Errors.E_VCODE);
         }
+        if (!svcode && auth.Limit.RegistMustVCode) {
+            throw new Error(auth.Errors.E_VCODE)
+        }
         if (await this.M(Models.Account).where({ Account: account }).getFields('UID')) {
             //账号已被使用
             throw new Error(auth.Errors.E_ACCOUNT_USED);
