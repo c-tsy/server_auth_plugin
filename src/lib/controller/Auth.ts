@@ -1,4 +1,4 @@
-import auth from '../..';
+import auth from '../../index';
 import { Models } from '../iface/models';
 import { MD5 } from '@ctsy/crypto';
 import { BController } from '../lib/controller';
@@ -27,6 +27,7 @@ export default class AuthController extends BController {
         if (svcode && svcode != vcode) {
             throw new Error(auth.Errors.E_VCODE);
         }
+        await this._session(auth.Fields.VCode, null);
         await hook_check(this._ctx, 'Auth', HookType.before, 'login', data)
         let user = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).find();
         let uid = user ? user.UID : 0;
@@ -126,10 +127,18 @@ export default class AuthController extends BController {
         if (!svcode && auth.Limit.RegistMustVCode) {
             throw new Error(auth.Errors.E_VCODE)
         }
+        await this._session(auth.Fields.VCode, null);
         if (await this.M(Models.Account).where({ Account: account }).getFields('UID')) {
             //账号已被使用
             throw new Error(auth.Errors.E_ACCOUNT_USED);
         }
+        /**
+         * 检查推介人信息
+         */
+        if (puid && !await this.M(Models.Users).where({ UID: puid }).getFields('UID')) {
+            throw new Error(auth.Errors.E_PUID_NOT_EXIST);
+        }
+        let lr = await this.M(Models.Levels).where({ UID: puid }).select();
         let reg = new Users();
         reg.Name = data.Name || '匿名'
         reg.Sex = data.Sex || -1
@@ -143,6 +152,12 @@ export default class AuthController extends BController {
         try {
             let user = await this.M(Models.Users).add(reg);
             if (user.UID > 0) {
+                // levels.push({ UID: user.UID, PUID:})
+                let ld = [];
+                for (let i = 0; i < lr.length; i++) {
+                    ld.push({ UID: user.UID, PUID: lr[i].PUID, Level: lr[i].Level });
+                }
+                ld.push({ UID: user.UID, PUID: puid, Level: lr.length })
                 let ac = new Account()
                 ac.Account = account;
                 ac.UID = user.UID;
@@ -154,12 +169,13 @@ export default class AuthController extends BController {
                 let ug = new UserGroupLink()
                 ug.UID = user.UID;
                 ug.CTime = new Date;
-                ug.UGID = auth.Default.UserGroupID;
-                ug.Memo = auth.Default.UserGroupMemo;
+                ug.UGID = auth.Default ? auth.Default.UserGroupID : 1;
+                ug.Memo = auth.Default ? auth.Default.UserGroupMemo : '自动分配';
                 await Promise.all([
                     this.M(Models.Account).add(ac),
                     this.M(Models.Pwd).add(upwd),
-                    this.M(Models.UserGroupLink).add(ug)
+                    this.M(Models.UserGroupLink).add(ug),
+                    this.M(Models.Levels).addAll(ld)
                 ])
                 await this.commit()
                 await hook_check(this._ctx, 'Auth', HookType.after, 'regist', user)
