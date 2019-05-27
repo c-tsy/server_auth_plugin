@@ -104,6 +104,10 @@ export default class AuthController extends BController {
     async regist(data) {
         let account: string = data[auth.Fields.Account];
         let pwd = data[auth.Fields.PWD];
+        let puid = data[auth.Fields.PUID]
+        if (auth.Limit.RegistMustPUID && !puid) {
+            throw new Error(auth.Errors.E_NO_PUID)
+        }
         //需要判断什么情况下必须用户输入验证码或者其他验证方式
         let vcode = data[auth.Fields.VCode];
         if ('string' != typeof account) {
@@ -127,6 +131,7 @@ export default class AuthController extends BController {
         reg.Name = data.Name || '匿名'
         reg.Sex = data.Sex || -1
         reg.Nick = data.Nick || '匿名'
+        reg.PUID = puid || 1;
         let r = await hook_check(this._ctx, 'Auth', HookType.before, 'regist', data)
         if ('object' == typeof r) {
             reg = Object.assign(reg, r);

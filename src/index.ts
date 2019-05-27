@@ -27,7 +27,7 @@ export class Auth extends ModuleConfig {
         /**
          * 原始密码字段
          */
-        OldPWD:'OldPWD',
+        OldPWD: 'OldPWD',
         /**
          * 验证码
          */
@@ -35,16 +35,29 @@ export class Auth extends ModuleConfig {
         /**
          * 权限字段名称
          */
-        Permission:'Permission',
+        Permission: 'Permission',
         /**
          * 用户编号
          */
-        UID: 'UID'
+        UID: 'UID',
+        /**
+         * 推介人
+         */
+        PUID: 'PUID',
     }
+
+    Limit = {
+        /**
+         * 注册时必须有推介人？
+         */
+        RegistMustPUID: true,
+    }
+
     /**
      * 错误提示信息
      */
     Errors = {
+        E_NO_PUID: '无推介人',
         E_PARAMS: '参数错误',
         E_ACCOUNT_NOT_EXIST: '账号不存在',
         E_PWD_EMPTY: '密码不存在',
@@ -54,19 +67,19 @@ export class Auth extends ModuleConfig {
         E_VCODE: '验证码错误或已过期',
         E_REG_ERROR: '注册失败',
         E_ACCOUNT_USED: '账号已被使用',
-        
+
     }
     Verify = {
-        Account:/^[\w\b_-]{5+}$/,
-        PWD:/.{6,}/
+        Account: /^[\w\b_-]{5+}$/,
+        PWD: /.{6,}/
     }
-    
+
     Hook = {
-        Auth:''
+        Auth: ''
     }
     Default: {
         UserGroupID: 1,
-        UserGroupMemo:''
+        UserGroupMemo: ''
     }
 }
 const auth = new Auth

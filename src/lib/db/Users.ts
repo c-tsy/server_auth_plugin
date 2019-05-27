@@ -7,40 +7,54 @@ import { DbDataType } from "@ctsy/model";
   * 性别 Sex 状态值(tinyint(1))
   * Status Status 状态值(tinyint(1))
 */
-export default {    
-    UID:{
-        type:DbDataType.bigint,
-        primaryKey:true,
-        autoIncrement:true,
-        defaultValue:0,
-        allowNull:false
-    },    
-    Name:{
-        type:DbDataType.char(50),
-        primaryKey:false,
-        autoIncrement:false,
-        defaultValue:"",
-        allowNull:false
-    },    
-    Nick:{
-        type:DbDataType.char(50),
-        primaryKey:false,
-        autoIncrement:false,
-        defaultValue:"",
-        allowNull:false
-    },    
-    Sex:{
-        type:DbDataType.tinyint(1),
-        primaryKey:false,
-        autoIncrement:false,
-        defaultValue:0,
-        allowNull:false
-    },    
-    Status:{
-        type:DbDataType.tinyint(1),
-        primaryKey:false,
-        autoIncrement:false,
-        defaultValue:1,
-        allowNull:false
+export default {
+    UID: {
+        type: DbDataType.bigint,
+        primaryKey: true,
+        autoIncrement: true,
+        defaultValue: 0,
+        allowNull: false
+    },
+    Name: {
+        type: DbDataType.char(50),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: "",
+        allowNull: false
+    },
+    Nick: {
+        type: DbDataType.char(50),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: "",
+        allowNull: false
+    },
+    Sex: {
+        type: DbDataType.tinyint(1),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 0,
+        allowNull: false
+    },
+    Status: {
+        type: DbDataType.tinyint(1),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 1,
+        allowNull: false
+    },
+    Channel: {
+        type: DbDataType.char(20),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: "",
+        allowNull: false
+    },
+    PUID: {
+        type: DbDataType.bigint(20),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 1,
+        allowNull: false
     },
 }

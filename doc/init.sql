@@ -179,6 +179,8 @@ CREATE TABLE `auth_users`  (
   `Nick` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Sex` tinyint(1) NOT NULL,
   `Status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '-1禁用，1正常',
+  `Channel` char(20) NOT NULL DEFAULT "",
+  `PUID`  bigint(20) NOT NULL DEFAULT 1
   PRIMARY KEY (`UID`) USING BTREE,
   UNIQUE INDEX `u_nick`(`Nick`) USING BTREE
 ) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;

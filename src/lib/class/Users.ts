@@ -6,11 +6,13 @@
   * 性别 Sex 状态值(tinyint(1))
   * Status Status 状态值(tinyint(1))
 */
-export default class Users{
-        
-    public UID:number=0;    
-    public Name:string="";    
-    public Nick:string="";    
-    public Sex:number=0;    
-    public Status:number=1;
+export default class Users {
+
+  public UID: number = 0;
+  public Name: string = "";
+  public Nick: string = "";
+  public Sex: number = 0;
+  public Status: number = 1;
+  public Channel = '';
+  public PUID: number = 1;
 }
