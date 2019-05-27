@@ -152,9 +152,9 @@ CREATE TABLE `auth_user_group_rule_link`  (
   `UGRL` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `UGID` bigint(20) UNSIGNED NOT NULL,
   `RID` bigint(20) UNSIGNED NOT NULL,
-  `U` tinyint(1) UNSIGNED NOT NULL,
-  `G` tinyint(1) UNSIGNED NOT NULL,
-  `O` tinyint(1) UNSIGNED NOT NULL,
+  `U` tinyint(1) UNSIGNED NOT NULL DEFAULT 15,
+  `G` tinyint(1) UNSIGNED NOT NULL DEFAULT 15,
+  `O` tinyint(1) UNSIGNED NOT NULL DEFAULT 15,
   PRIMARY KEY (`UGRL`) USING BTREE,
   UNIQUE INDEX `u_ugrl`(`UGID`, `RID`) USING BTREE,
   INDEX `FK_user_group_rule_rule`(`RID`) USING BTREE,
@@ -165,9 +165,9 @@ CREATE TABLE `auth_user_group_rule_link`  (
 -- ----------------------------
 -- Records of user_group_rule_link
 -- ----------------------------
-INSERT INTO `auth_user_group_rule_link` VALUES (1, 1, 1);
-INSERT INTO `auth_user_group_rule_link` VALUES (2, 1, 2);
-INSERT INTO `auth_user_group_rule_link` VALUES (3, 1, 3);
+INSERT INTO `auth_user_group_rule_link` VALUES (1, 1, 1,15,15,15);
+INSERT INTO `auth_user_group_rule_link` VALUES (2, 1, 2,15,15,15);
+INSERT INTO `auth_user_group_rule_link` VALUES (3, 1, 3,15,15,15);
 
 -- ----------------------------
 -- Table structure for users
