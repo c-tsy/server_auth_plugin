@@ -86,7 +86,7 @@ export class Auth extends ModuleConfig {
         PWD: /.{6,}/
     }
 
-    Hook: { [index: string]: Function | ClassDecorator } = {
+    Hook: { [index: string]: any } = {
     }
 }
 const auth = new Auth

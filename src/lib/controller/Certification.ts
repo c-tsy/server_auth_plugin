@@ -25,10 +25,13 @@ export default class Certification extends BController {
         cl.Data = data.Data;
         let cr = new CertificationResult()
         cr.UID = uid; cr.CID = data.CID; cr.Data = data.Data;
-        return await Promise.all([
+        await hook_check(this._ctx, 'Certification', HookType.before, 'apply', data);
+        await Promise.all([
             this.M(Models.CertificationLog).add(cl),
             this.M(Models.CertificationResult).add(cr),
         ])
+        await hook_check(this._ctx, 'Certification', HookType.after, 'apply', data);
+        return true;
     }
     /**
      * 审核认证
