@@ -1,30 +1,26 @@
-export enum Models{
-    
+export enum Models {
         //账号
-        Account="Account",
-    
+        Account = "Account",
         //用户
-        Users="Users",
-    
+        Users = "Users",
         //用户组
-        UserGroup="UserGroup",
-    
+        UserGroup = "UserGroup",
         //用户分组
-        UserGroupLink="UserGroupLink",
-    
+        UserGroupLink = "UserGroupLink",
         //权限组
-        RuleGroup="RuleGroup",
-    
+        RuleGroup = "RuleGroup",
         //权限
-        Rule="Rule",
-    
+        Rule = "Rule",
         //用户组权限
-        UserGroupRuleLink="UserGroupRuleLink",
-    
+        UserGroupRuleLink = "UserGroupRuleLink",
         //密码
-        Pwd="Pwd",
-    
+        Pwd = "Pwd",
         //联系方式
-        Contact="Contact",
-        
+        Certification = "Certification",
+
+        CertificationLog = "CertificationLog",
+
+        CertificationResult = "CertificationResult",
+
+        Levels = "Levels",
 }

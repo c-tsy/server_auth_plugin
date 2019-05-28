@@ -3,6 +3,11 @@ import Configer, { Config } from './config'
 import { ModuleConfig } from '@ctsy/server_plugin';
 import { Password } from '@ctsy/crypto'
 export class Auth extends ModuleConfig {
+
+    Default: {
+        UserGroupID: 1,
+        UserGroupMemo: ''
+    }
     /**
      * 密码Hash盐
      */
@@ -51,6 +56,7 @@ export class Auth extends ModuleConfig {
          * 注册时必须有推介人？
          */
         RegistMustPUID: false,
+
         RegistMustVCode: false
     }
 
@@ -68,6 +74,11 @@ export class Auth extends ModuleConfig {
         E_VCODE: '验证码错误或已过期',
         E_REG_ERROR: '注册失败',
         E_ACCOUNT_USED: '账号已被使用',
+        E_CERTIFICATED: '账户已认证',
+        E_CERTIFICATING: '请等待认证结果后再申请',
+        E_PUID_NOT_EXIST: '推介人不存在',
+        E_NO_CERTIFICATION: '无该认证信息',
+        E_JUDGED: '该认证已被处理',
 
     }
     Verify = {
@@ -75,12 +86,7 @@ export class Auth extends ModuleConfig {
         PWD: /.{6,}/
     }
 
-    Hook = {
-        Auth: ''
-    }
-    Default: {
-        UserGroupID: 1,
-        UserGroupMemo: ''
+    Hook: { [index: string]: Function | ClassDecorator } = {
     }
 }
 const auth = new Auth

@@ -2,9 +2,9 @@ import auth from "..";
 /**
  * Hook
  */
-export enum HookType{
+export enum HookType {
     before = '_before_',
-    after = '_after',
+    after = '_after_',
 }
 /**
  * hook检查
@@ -14,12 +14,12 @@ export enum HookType{
  * @param method 
  * @param data 
  */
-export async function hook_check(ctx,hook,where:HookType=HookType.before,method,data?) {
+export async function hook_check(ctx, hook, where: HookType = HookType.before, method, data?) {
     if (auth.Hook[hook] instanceof Function) {
         let h = ''
         if (auth.Hook[hook].constructor) {
             h = new auth.Hook[hook](ctx);
-            let m = where+method
+            let m = where + method
             if (h[m] instanceof Function) {
                 await h[m](data);
             }

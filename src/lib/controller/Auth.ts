@@ -29,8 +29,8 @@ export default class AuthController extends BController {
         }
         await this._session(auth.Fields.VCode, null);
         await hook_check(this._ctx, 'Auth', HookType.before, 'login', data)
-        let user = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).find();
-        let uid = user ? user.UID : 0;
+        let UserAccount = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).find();
+        let uid = UserAccount ? UserAccount.UID : 0;
         if (!uid) {
             throw new Error(auth.Errors.E_ACCOUNT_NOT_EXIST);
         }
@@ -39,17 +39,18 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_PWD_EMPTY);
         }
         if (auth.Crypto.verify(pwd, p)) {
-            let [user, ugids] = await Promise.all([
+            let [userrs, ugids] = await Promise.all([
                 this.M(Models.Users).where({ UID: uid }).find(),
                 this.M(Models.UserGroupLink).where({ UID: uid }).getFields('UGID', true),
                 this._session('UID', uid),
                 hook_check(this._ctx, 'Auth', HookType.after, 'login', data),
             ])
             let group = ugids.length > 0 ? await this.M(Models.UserGroup).where({ UGID: { in: ugids } }).select() : [];
-            user.UGIDs = ugids;
-            user.Groups = group;
+            userrs.UGIDs = ugids;
+            userrs.Groups = group;
+            userrs.Account = UserAccount;
             let [r] = await Promise.all([
-                this._session('User', user),
+                this._session('User', userrs),
                 this._session('UGIDS', ugids),
             ])
             // await this._session('UID', uid);
@@ -66,7 +67,7 @@ export default class AuthController extends BController {
                 rmap[rules[i].Rule] = [rules[i].RID, rules[i].Title, rids[i].U, rids[i].G, rids[i].O]
             }
             await this._session(auth.Fields.Permission, rmap)
-            return user;
+            return UserAccount;
         } else {
             await this._session('UID', undefined);
             throw new Error(auth.Errors.E_PWD_ERROR)
