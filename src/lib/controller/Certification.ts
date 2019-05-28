@@ -4,6 +4,7 @@ import { BController } from '../lib/controller';
 import auth from '../..';
 import CertificationLog from '../class/CertificationLog';
 import { hook_check, HookType } from '../utils';
+import CertificationResult from '../class/CertificationResult';
 export default class Certification extends BController {
     /**
      * 申请认证
@@ -22,7 +23,12 @@ export default class Certification extends BController {
         cl.UID = uid;
         cl.CID = data.CID;
         cl.Data = data.Data;
-        return await this.M(Models.CertificationLog).add(cl)
+        let cr = new CertificationResult()
+        cr.UID = uid; cr.CID = data.CID; cr.Data = data.Data;
+        return await Promise.all([
+            this.M(Models.CertificationLog).add(cl),
+            this.M(Models.CertificationResult).add(cr),
+        ])
     }
     /**
      * 审核认证
@@ -53,6 +59,9 @@ export default class Certification extends BController {
      */
     async check() {
         return await this.M(Models.CertificationResult).where({ UID: await this._session('UID') }).find();
+    }
+    async log() {
+        // return
     }
     /**
      * 获取认证类型数据
