@@ -208,6 +208,7 @@ export default class AuthController extends BController {
         if (vcode !== await this._session(auth.Fields.VCode)) {
             throw new Error(auth.Errors.E_VCODE);
         }
+        await this._session(auth.Fields.VCode, null);
         let account = data[auth.Fields.Account];
         if ('string' != typeof account) {
             throw new Error(auth.Errors.E_PARAMS)
