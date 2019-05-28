@@ -67,7 +67,7 @@ export default class AuthController extends BController {
                 rmap[rules[i].Rule] = [rules[i].RID, rules[i].Title, rids[i].U, rids[i].G, rids[i].O]
             }
             await this._session(auth.Fields.Permission, rmap)
-            return UserAccount;
+            return userrs;
         } else {
             await this._session('UID', undefined);
             throw new Error(auth.Errors.E_PWD_ERROR)
