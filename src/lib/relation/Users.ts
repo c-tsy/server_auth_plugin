@@ -9,15 +9,13 @@ import Account from "./Account";
   * Status Status 状态值(tinyint(1))
 */
 export default class Users extends Relation {
-  constructor() {
-    super(...arguments)
-    this.hasMany({
+  _many = {
+    Account: {
       name: 'Accounts',
       table: 'Account',
       fields: 'UID,Account',
       pk: "UID",
       fk: 'UID',
-      relation: new Account(this._ctx, 'Account', arguments[2], arguments[3], arguments[4])
-    })
+    }
   }
 }
