@@ -84,7 +84,7 @@ bluebird@^3.4.6, bluebird@^3.5.0:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.4.tgz#d6cc661595de30d5b3af5fcedd3c0b3ef6ec5714"
   integrity sha512-FG+nFEZChJrbQ9tIccIfZJBz3J7mLrAhxakAbnrJWn8d7aKOC+LWifa0G+p4ZqKp4y13T7juYvdhq9NzKdsrjw==
 
-castle-function@^1.0.1:
+castle-function@^1.0.1, castle-function@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/castle-function/-/castle-function-1.0.2.tgz#2c906d3baf28edd3004b18f9b76b4ebb368613ca"
   integrity sha512-zN5o9mpEoKIC7w6xzPxjSkRDb7rs25vRelRcdIJU45tGX7luv8GLx8w50CKn+nakCaOQMtQaFIVZbqV7k4ndGw==

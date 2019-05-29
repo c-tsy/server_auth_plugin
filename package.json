@@ -15,7 +15,8 @@
     "@ctsy/controller": "^1.0.12",
     "@ctsy/crypto": "^1.0.5",
     "@ctsy/relation": "^1.0.6",
-    "@ctsy/server_plugin": "^1.0.0"
+    "@ctsy/server_plugin": "^1.0.0",
+    "castle-function": "^1.0.2"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.7",
