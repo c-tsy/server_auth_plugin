@@ -24,13 +24,7 @@ export class BController extends BaseController {
         //TODO 检查权限
         return (await this._session(auth.Fields.Permission))[data.Rule];
     }
-    async R(RelationName) {
-        return await R(this._ctx, RelationName, this._prefix);
-    }
 }
 export class CController extends Controller {
     _prefix: any = 'auth_'
-    async R(RelationName) {
-        return await R(this._ctx, RelationName, this._prefix);
-    }
 }

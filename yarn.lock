@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@ctsy/controller@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@ctsy/controller/-/controller-1.0.12.tgz#6302d404e0b0f3b0240bf8ff7151b918a4c460ec"
-  integrity sha512-+To20g3RA7eCah/N6w+qjmhPbrgS9it6xPFI6fY/QNYSN/NMbKMAbLr1A6fw9K0+YkMwwfHhY1qqufhBM7YuIA==
+"@ctsy/controller@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@ctsy/controller/-/controller-1.0.14.tgz#1d163ce05585d1af05df1c20d5d0471d53b28376"
+  integrity sha512-nJ1IdbvCDNMSNRSOFudoXAPB+/Wpe71kdy4YxB9IZhzU/OaYrHbMcWfFyuyf0/mxePv75KZpyIw3G1Byn9XCUg==
   dependencies:
     "@ctsy/model" "^1.0.16"
-    "@ctsy/relation" "^1.0.5"
+    "@ctsy/relation" "^1.0.6"
     lodash "^4.17.11"
     mime "^2.4.0"
     mz "^2.7.0"
@@ -28,10 +28,19 @@
     lodash "^4.17.11"
     sequelize "^4.41.2"
 
-"@ctsy/relation@^1.0.5", "@ctsy/relation@^1.0.6":
+"@ctsy/relation@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@ctsy/relation/-/relation-1.0.6.tgz#ae23668c7aa0e88c8dca1b0178b5676e1f0073b0"
   integrity sha512-OH8tdamIhEs3vS3HiwzxVVukovUX/O30sWjUJXwN3TQyS45UOYITeMA6nLnTLd4bZdubBnPg7l7+gE7Oyanaqg==
+  dependencies:
+    "@ctsy/model" "^1.0.16"
+    castle-function "^1.0.1"
+    lodash "^4.17.11"
+
+"@ctsy/relation@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@ctsy/relation/-/relation-1.0.7.tgz#888e15cf6ad83179f5af9eab57da1933022144ea"
+  integrity sha512-x/i/xfsOarLPTPj+FZtsaoVIQFGWpt+SyROEb/QCg5Dsmt6cCMH3mlCIj5/Esp/3MKb+T0Nk/pLRjgDPJUdPNQ==
   dependencies:
     "@ctsy/model" "^1.0.16"
     castle-function "^1.0.1"

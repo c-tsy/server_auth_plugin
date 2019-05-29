@@ -6,8 +6,5 @@ import Relation, { R } from "@ctsy/relation";
   * 类型 Type 字符50(char(50))
   * 状态 Status 状态值(tinyint(1))
 */
-export default class Account extends Relation{    
-    constructor(ctx,table){
-        super(ctx,table)
-    }
+export default class Account extends Relation {
 }

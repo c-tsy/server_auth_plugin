@@ -12,9 +12,9 @@
   "author": "CastleMY <490523604@qq.com>",
   "license": "MIT",
   "dependencies": {
-    "@ctsy/controller": "^1.0.12",
+    "@ctsy/controller": "^1.0.14",
     "@ctsy/crypto": "^1.0.5",
-    "@ctsy/relation": "^1.0.6",
+    "@ctsy/relation": "^1.0.7",
     "@ctsy/server_plugin": "^1.0.0",
     "castle-function": "^1.0.2"
   },
