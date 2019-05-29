@@ -6,8 +6,5 @@ import Relation, { R } from "@ctsy/relation";
   * 值 V 字符50(char(50))
   * 配置 C 字符250(char(250))
 */
-export default class Contact extends Relation{    
-    constructor(ctx,table){
-        super(ctx,table)
-    }
+export default class Contact extends Relation {
 }

@@ -7,8 +7,5 @@ import Relation, { R } from "@ctsy/relation";
   * 分组时间 CTime 时间日期(datetime)
   * 备注 Memo (char(250))
 */
-export default class UserGroupLink extends Relation{    
-    constructor(ctx,table){
-        super(ctx,table)
-    }
+export default class UserGroupLink extends Relation {
 }

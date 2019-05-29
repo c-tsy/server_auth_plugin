@@ -8,8 +8,5 @@ import Relation, { R } from "@ctsy/relation";
   * 备注 Memo 字符50(char(50))
   * 继承组 EUGID 序号(bigint)
 */
-export default class UserGroup extends Relation{    
-    constructor(ctx,table){
-        super(ctx,table)
-    }
+export default class UserGroup extends Relation {
 }

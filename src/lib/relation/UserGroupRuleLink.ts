@@ -5,8 +5,5 @@ import Relation, { R } from "@ctsy/relation";
   * UGID UGID 序号(bigint)
   * RID RID 序号(bigint)
 */
-export default class UserGroupRuleLink extends Relation{    
-    constructor(ctx,table){
-        super(ctx,table)
-    }
+export default class UserGroupRuleLink extends Relation {
 }

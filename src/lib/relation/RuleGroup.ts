@@ -7,8 +7,5 @@ import Relation, { R } from "@ctsy/relation";
   * PRGID PRGID 序号(bigint)
   * 组序 Sort 序号(bigint)
 */
-export default class RuleGroup extends Relation{    
-    constructor(ctx,table){
-        super(ctx,table)
-    }
+export default class RuleGroup extends Relation {
 }

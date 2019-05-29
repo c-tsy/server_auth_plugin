@@ -9,8 +9,5 @@ import Relation, { R } from "@ctsy/relation";
   * 备注 Memo 字符250(char(250))
   * 排序 Sort 序号(bigint)
 */
-export default class Rule extends Relation{    
-    constructor(ctx,table){
-        super(ctx,table)
-    }
+export default class Rule extends Relation {
 }
