@@ -15,4 +15,5 @@ export default class Users {
   public Status: number = 1;
   public Channel = '';
   public PUID: number = 1;
+  public TNum: number = 1;
 }

@@ -57,4 +57,11 @@ export default {
         defaultValue: 1,
         allowNull: false
     },
+    TNum: {
+        type: DbDataType.bigint(20),
+        primaryKey: false,
+        autoIncrement: false,
+        defaultValue: 1,
+        allowNull: false
+    },
 }

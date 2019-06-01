@@ -176,7 +176,11 @@ export default class AuthController extends BController {
                     this.M(Models.Account).add(ac),
                     this.M(Models.Pwd).add(upwd),
                     this.M(Models.UserGroupLink).add(ug),
-                    this.M(Models.Levels).addAll(ld)
+                    this.M(Models.Levels).addAll(ld),
+                    /**
+                     * 注册的时候团队人数+1
+                     */
+                    this.M(Models.Users).where({ UID: reg.PUID }).incOrDec({ TNum: 1 }),
                 ])
                 await this.commit()
                 await hook_check(this._ctx, 'Auth', HookType.after, 'regist', user)
