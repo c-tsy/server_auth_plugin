@@ -5,6 +5,13 @@ import { array_columns } from 'castle-function'
 export default class User extends BController {
     // _prefix = auth.Prefix;
     /**
+     * 保存昵称
+     * @param param0 
+     */
+    async save({ Nick }) {
+        return await this.M(Models.Users).where({ UID: await this._session('UID') }).save({ Nick });
+    }
+    /**
      * 获取我的团队信息
      * @param param0 
      */
