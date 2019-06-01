@@ -181,6 +181,7 @@ CREATE TABLE `auth_users`  (
   `Status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '-1禁用，1正常',
   `Channel` char(20) NOT NULL DEFAULT "",
   `PUID`  bigint(20) NOT NULL DEFAULT 1,
+  `TNum`  bigint(20) NOT NULL DEFAULT 0,
   PRIMARY KEY (`UID`) USING BTREE,
   UNIQUE INDEX `u_nick`(`Nick`) USING BTREE
 ) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
