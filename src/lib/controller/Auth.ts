@@ -23,10 +23,10 @@ export default class AuthController extends BController {
         if ('string' != typeof pwd) {
             throw new Error(auth.Errors.E_PARAMS)
         }
-        let svcode = await this._session(auth.Fields.VCode);
-        if (svcode && svcode != vcode) {
-            throw new Error(auth.Errors.E_VCODE);
-        }
+        // let svcode = await this._session(auth.Fields.VCode);
+        // if (svcode && svcode != vcode) {
+        //     throw new Error(auth.Errors.E_VCODE);
+        // }
         await this._session(auth.Fields.VCode, null);
         await hook_check(this._ctx, 'Auth', HookType.before, 'login', data)
         let UserAccount = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).find();
