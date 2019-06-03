@@ -1,12 +1,13 @@
 import auth from '../../index';
 import { Models } from '../iface/models';
-import { MD5 } from '@ctsy/crypto';
+// import { MD5 } from '@ctsy/crypto';
 import { BController } from '../lib/controller';
-import { hook_check, HookType } from '../utils';
+// import { hook_check, HookType } from '../utils';
 import Users from '../class/Users';
 import Account from '../class/Account';
 import Pwd from '../class/Pwd';
 import UserGroupLink from '../class/UserGroupLink';
+import Hook, { HookWhen } from '@ctsy/hook';
 export default class AuthController extends BController {
     /**
      * 登陆
@@ -28,7 +29,8 @@ export default class AuthController extends BController {
         //     throw new Error(auth.Errors.E_VCODE);
         // }
         await this._session(auth.Fields.VCode, null);
-        await hook_check(this._ctx, 'Auth', HookType.before, 'login', data)
+        await Hook.emit('Auth/login', HookWhen.Before, this._ctx, data);
+        // await hook_check(this._ctx, 'Auth', HookType.before, 'login', data)
         let UserAccount = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).find();
         let uid = UserAccount ? UserAccount.UID : 0;
         if (!uid) {
@@ -43,7 +45,8 @@ export default class AuthController extends BController {
                 this.M(Models.Users).where({ UID: uid }).find(),
                 this.M(Models.UserGroupLink).where({ UID: uid }).getFields('UGID', true),
                 this._session('UID', uid),
-                hook_check(this._ctx, 'Auth', HookType.after, 'login', data),
+                // hook_check(this._ctx, 'Auth', HookType.after, 'login', data),
+                Hook.emit('Auth/login', HookWhen.After, this._ctx, data)
             ])
             let group = ugids.length > 0 ? await this.M(Models.UserGroup).where({ UGID: { in: ugids } }).select() : [];
             userrs.UGIDs = ugids;
@@ -145,10 +148,11 @@ export default class AuthController extends BController {
         reg.Sex = data.Sex || -1
         reg.Nick = data.Nick || '匿名'
         reg.PUID = puid || 1;
-        let r = await hook_check(this._ctx, 'Auth', HookType.before, 'regist', data)
-        if ('object' == typeof r) {
-            reg = Object.assign(reg, r);
-        }
+        await Hook.emit('Auth/regist', HookWhen.Before, this._ctx, data)
+        // let r = await hook_check(this._ctx, 'Auth', HookType.before, 'regist', data)
+        // if ('object' == typeof r) {
+        //     reg = Object.assign(reg, r);
+        // }
         await this.startTrans();
         try {
             let user = await this.M(Models.Users).add(reg);
@@ -182,8 +186,8 @@ export default class AuthController extends BController {
                      */
                     this.M(Models.Users).where({ UID: reg.PUID }).incOrDec({ TNum: 1 }),
                 ])
+                await Hook.emit('Auth/regist', HookWhen.After, this._ctx, data)
                 await this.commit()
-                await hook_check(this._ctx, 'Auth', HookType.after, 'regist', user)
                 return user;
             } else {
                 await this.rollback()
@@ -217,10 +221,12 @@ export default class AuthController extends BController {
         if ('string' != typeof account) {
             throw new Error(auth.Errors.E_PARAMS)
         }
-        await hook_check(this._ctx, 'Auth', HookType.before, 'forget', data)
+        await Hook.emit('Auth/forget', HookWhen.Before, this._ctx, data)
+        // await hook_check(this._ctx, 'Auth', HookType.before, 'forget', data)
         let UID = await this.M(Models.Account).where({ Account: account }).getFields('UID');
         await this.M(Models.Pwd).where({ UID }).save({ PWD: auth.Crypto.encode(pwd) })
-        await hook_check(this._ctx, 'Auth', HookType.after, 'forget', data)
+        // await hook_check(this._ctx, 'Auth', HookType.after, 'forget', data)
+        await Hook.emit('Auth/forget', HookWhen.After, this._ctx, data)
         return true;
     }
     /**
@@ -243,11 +249,13 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_PARAMS_FAILD)
         }
         let UID = await this.checkLogin();
-        await hook_check(this._ctx, 'Auth', HookType.before, 'reset', data)
+        await Hook.emit('Auth/reset', HookWhen.Before, this._ctx, data)
+        // await hook_check(this._ctx, 'Auth', HookType.before, 'reset', data)
         let p = await this.M(Models.Pwd).where({ UID }).getFields('PWD');
         if (auth.Crypto.verify(opwd, p)) {
             await this.M(Models.Pwd).where({ UID }).save({ PWD: auth.Crypto.encode(pwd) });
-            await hook_check(this._ctx, 'Auth', HookType.after, 'reset', data)
+            // await hook_check(this._ctx, 'Auth', HookType.after, 'reset', data)
+            await Hook.emit('Auth/reset', HookWhen.After, this._ctx, data)
             return true;
         } else {
             //原始密码错误

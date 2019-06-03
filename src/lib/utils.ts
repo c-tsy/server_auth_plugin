@@ -1,4 +1,5 @@
 import auth from "..";
+import Hook, { HookWhen } from '@ctsy/hook'
 /**
  * Hook
  */
@@ -15,6 +16,7 @@ export enum HookType {
  * @param data 
  */
 export async function hook_check(ctx, hook, where: HookType = HookType.before, method, data?) {
+    Hook.emit(hook, where == HookType.after ? HookWhen.After : HookWhen.Before, ctx, data)
     if (auth.Hook[hook] instanceof Function) {
         let h = ''
         if (auth.Hook[hook].constructor) {
