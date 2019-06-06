@@ -5,6 +5,7 @@ import auth from '../..';
 import CertificationLog from '../class/CertificationLog';
 import { hook_check, HookType } from '../utils';
 import CertificationResult from '../class/CertificationResult';
+import Hook, { HookWhen } from '@ctsy/hook';
 export default class Certification extends BController {
     /**
      * 申请认证
@@ -20,7 +21,8 @@ export default class Certification extends BController {
             throw new Error(auth.Errors.E_CERTIFICATING)
         }
         try {
-            await hook_check(this._ctx, 'Certification', HookType.before, 'apply', data);
+            await Hook.emit('Certification/apply', HookWhen.Before, this._ctx, data)
+            // await hook_check(this._ctx, 'Certification', HookType.before, 'apply', data);
             let cl = new CertificationLog()
             cl.UID = uid;
             cl.CID = data.CID;
@@ -32,7 +34,8 @@ export default class Certification extends BController {
                 this.M(Models.CertificationLog).add(cl),
                 this.M(Models.CertificationResult).add(cr),
             ])
-            await hook_check(this._ctx, 'Certification', HookType.after, 'apply', rs);
+            await Hook.emit('Certification/apply', HookWhen.After, this._ctx, rs)
+            // await hook_check(this._ctx, 'Certification', HookType.after, 'apply', rs);
             await this.commit();
         } catch (error) {
             await this.rollback()
