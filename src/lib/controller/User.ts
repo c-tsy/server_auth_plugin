@@ -44,6 +44,11 @@ export default class User extends BController {
      * @param param0 
      */
     async team({ UID, P, N }) {
-        return await this.R(Models.Users).where({ PUID: UID }).page(P || 1, N || 10).select();
+        if (!UID) { UID = await this._session('UID'); }
+        let mine = await this.M(Models.Users).where({ UID }).getFields('TNum');
+        return {
+            L: await this.R(Models.Users).where({ PUID: UID }).page(P || 1, N || 10).select(),
+            P, N, T: mine
+        }
     }
 }
