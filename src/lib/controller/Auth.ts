@@ -186,7 +186,7 @@ export default class AuthController extends BController {
                      */
                     this.M(Models.Users).where({ UID: reg.PUID }).incOrDec({ TNum: 1 }),
                 ])
-                await Hook.emit('Auth/regist', HookWhen.After, this._ctx, data)
+                await Hook.emit('Auth/regist', HookWhen.After, this._ctx, user)
                 await this.commit()
                 return user;
             } else {
