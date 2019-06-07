@@ -39,4 +39,11 @@ export default class User extends BController {
             N: N,
         }
     }
+    /**
+     * 获取指定成远的团队信息
+     * @param param0 
+     */
+    async team({ UID, P, N }) {
+        return await this.M(Models.Users).where({ PUID: UID }).fields('UID,Name,Nick,Sex,TNum').page(P || 1, N || 10).select();
+    }
 }
