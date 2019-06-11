@@ -46,7 +46,7 @@ export default class AuthController extends BController {
                 this.M(Models.UserGroupLink).where({ UID: uid }).getFields('UGID', true),
                 this._session('UID', uid),
                 // hook_check(this._ctx, 'Auth', HookType.after, 'login', data),
-                Hook.emit('Auth/login', HookWhen.After, this._ctx, data)
+                Hook.emit('Auth/login', HookWhen.After, this._ctx, UserAccount)
             ])
             let group = ugids.length > 0 ? await this.M(Models.UserGroup).where({ UGID: { in: ugids } }).select() : [];
             userrs.UGIDs = ugids;
