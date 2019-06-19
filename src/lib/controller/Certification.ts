@@ -70,8 +70,8 @@ export default class Certification extends BController {
     /**
      * 获取我的认证信息
      */
-    async check() {
-        return await this.M(Models.CertificationResult).where({ UID: await this._session('UID') }).find() || {};
+    async check({ CID }) {
+        return CID ? await this.M(Models.CertificationResult).where({ CID, UID: await this._session('UID') }).select() : await this.M(Models.CertificationResult).where({ UID: await this._session('UID') }).find() || {};
     }
     async log() {
         // return
