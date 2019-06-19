@@ -36,6 +36,9 @@ export default class AuthController extends BController {
         if (!uid) {
             throw new Error(auth.Errors.E_ACCOUNT_NOT_EXIST);
         }
+        if (UserAccount.Status <= 0) {
+            throw new Error(auth.Errors.E_ACCOUNT_FORBIDDEN);
+        }
         let p = await this.M(Models.Pwd).where({ UID: uid }).getFields('PWD');
         if (!p) {
             throw new Error(auth.Errors.E_PWD_EMPTY);
