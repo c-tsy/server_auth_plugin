@@ -100,6 +100,31 @@ export default class AuthController extends BController {
         await this._session('User', null);
         return true;
     }
+
+    /**
+     * 允许更换账号
+     * @param data 
+     */
+    async changeAccount(data) {
+
+        let VCode = data[auth.Fields.VCode];
+        let SVCode = await this._session(auth.Fields.VCode);
+        if (VCode != SVCode) {
+            throw new Error(auth.Errors.E_VCODE);
+        }
+
+        let UID = await this._session('UID');
+        if (UID <= 1) {
+            throw new Error(auth.Errors.E_NOT_LOGIN);
+        }
+
+        let Account = data.Account;
+        if (!Account || !auth.Verify.Account.test(Account)) {
+            throw new Error(auth.Errors.E_ACCOUNT_FORBIDDEN);
+        }
+
+        return !!(await this.M(Models.Account).where({ UID, Type: "PWD" }).limit(1).save({ Account }))
+    }
     /**
      * 重新登录
      */
