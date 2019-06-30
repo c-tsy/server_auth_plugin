@@ -32,7 +32,7 @@ export default class Certification extends BController {
             await this.startTrans()
             let rs = await Promise.all([
                 this.M(Models.CertificationLog).add(cl),
-                this.M(Models.CertificationResult).add(cr),
+                // this.M(Models.CertificationResult).add(cr),
             ])
             await Hook.emit('Certification/apply', HookWhen.After, this._ctx, rs)
             // await hook_check(this._ctx, 'Certification', HookType.after, 'apply', rs);
@@ -46,7 +46,7 @@ export default class Certification extends BController {
     /**
      * 审核认证
      */
-    async judge(data) {
+    async judge(data: { CLID: number, CID: number, Result: string, Memo: string }) {
         let uid = await this.checkLogin();
         if (!data.CLID) { throw new Error(auth.Errors.E_PARAMS) }
         let j = await this.M(Models.CertificationLog).where({ CLID: data.CLID }).find()
@@ -57,7 +57,7 @@ export default class Certification extends BController {
             await this.startTrans()
             await Promise.all([
                 this.M(Models.CertificationLog).where({ CLID: data.CLID }).save({ JTime: new Date, Result: data.Result, Memo: data.Memo || '' }),
-                this.M(Models.CertificationResult).addIfNotExist({ Data: j.Data, CTime: j.CTime, PTime: new Date }, { CID: data.CID, UID: j.UID }),
+                this.M(Models.CertificationResult).addIfNotExist({ Data: j.Data, CTime: j.CTime, PTime: new Date }, { CID: data.CID, UID: uid }),
                 hook_check(this._ctx, 'Certification', HookType.after, 'judge', data)
             ])
             await this.commit();
