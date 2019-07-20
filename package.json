@@ -12,16 +12,16 @@
   "author": "CastleMY <490523604@qq.com>",
   "license": "MIT",
   "dependencies": {
-    "@ctsy/controller": "^1.0.16",
-    "@ctsy/crypto": "^1.0.5",
-    "@ctsy/hook": "^0.0.2",
-    "@ctsy/relation": "^1.0.8",
-    "@ctsy/server_plugin": "^1.0.0",
-    "castle-function": "^1.0.2"
+    "@ctsy/controller": "~1.0.16",
+    "@ctsy/crypto": "~1.0.5",
+    "@ctsy/hook": "~0.0.2",
+    "@ctsy/relation": "~1.0.8",
+    "@ctsy/server_plugin": "~1.0.0",
+    "castle-function": "~1.0.2"
   },
   "devDependencies": {
-    "@types/geojson": "^7946.0.7",
-    "@types/mz": "^0.0.32",
-    "@types/node": "^11.13.9"
+    "@types/geojson": "~7946.0.7",
+    "@types/mz": "~0.0.32",
+    "@types/node": "~11.13.9"
   }
 }

@@ -2,47 +2,49 @@
 # yarn lockfile v1
 
 
-"@ctsy/controller@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@ctsy/controller/-/controller-1.0.16.tgz#4058e8e82a6504d47477c940a5dd2bf265e5ef1a"
-  integrity sha512-mXokoZDYbvmrVACMuh7kUVzIyM5ee08xETfeQtG6D0iwejwQH3pRyHcodq0E3tLSKdv0zZFwqRrJmcspM0B+Ng==
+"@ctsy/controller@~1.0.16":
+  version "1.0.22"
+  resolved "https://registry.yarnpkg.com/@ctsy/controller/-/controller-1.0.22.tgz#c3c32949d75e4b5d490b675c132ac1b8a2195cb6"
+  integrity sha512-fcwKpRkZ0rgnYZqvcaX8MFbrAThX4lw9GGWuOx5yW3oLYdPlDvToKzgcESMmpqFdGUWZlZIBcmH5ok6+3Ayb6Q==
   dependencies:
-    "@ctsy/model" "^1.0.16"
-    "@ctsy/relation" "^1.0.8"
+    "@ctsy/model" "^1.0.18"
+    "@ctsy/relation" "^1.0.10"
     lodash "^4.17.11"
     mime "^2.4.0"
     mz "^2.7.0"
+    sequelize "4.43.0"
 
-"@ctsy/crypto@^1.0.5":
+"@ctsy/crypto@~1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@ctsy/crypto/-/crypto-1.0.5.tgz#6dded577405fcd0f6fba15cc991e299be2d70419"
   integrity sha512-BLaz0xS7ToYEXZg3xsOP9nJkW7BOxyynOPdYo8HHS8ZKd2siFXroEMtOAUwkdQB5N5+2CPHUOMXMivyhkG38KA==
   dependencies:
     "@types/node" "^10.12.5"
 
-"@ctsy/hook@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@ctsy/hook/-/hook-0.0.1.tgz#9fae6c09330dbc14c070abdb07b52470f49990f7"
-  integrity sha512-Au4kDTDa3qQ0lpCQiHy0PrHVCCttGDEv9j05cxojoqZPmGRqgoTDidj3lq0h85tCIYpzDwVA1AIatsk7bRUR/w==
+"@ctsy/hook@~0.0.2":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@ctsy/hook/-/hook-0.0.4.tgz#8c306cbb1d923e473672c643a869c9bd55eeb83a"
+  integrity sha512-Fs/9e9O3/MWSvlRdTpqZsvBu3F3i2mrhBMl5bdHGYcqHdY1UOimvb6yI3qiaLWUyd/nqRpex4ID0tmWlk52BLg==
 
-"@ctsy/model@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@ctsy/model/-/model-1.0.16.tgz#dcfd41c769ac6be35f382ef27a0dbcdd78e1a08d"
-  integrity sha512-Y4O7kll+ajEOjrIorroMP8pe04ioIRRXWTPCEmwgcl6ztoh3U1AJbQP63jILlEatYuwX8y1ur5zTQeyysUV+NQ==
+"@ctsy/model@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@ctsy/model/-/model-1.0.18.tgz#6c59ba157758e6e21bd1d7428de691519c4bdb82"
+  integrity sha512-A3Dvrf75XHJFM4G5j4qYF7qdOefYLK38DwBGq3msXZZfm846UuPof3Xo21Pxa/8yKodr7auAIkS96w9mSBXFOA==
   dependencies:
     lodash "^4.17.11"
-    sequelize "^4.41.2"
+    sequelize "4.43.0"
 
-"@ctsy/relation@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@ctsy/relation/-/relation-1.0.8.tgz#10e725ed2c465996c7d14ec83e2cd88b5e1e77b5"
-  integrity sha512-Cnm8A9ehtNgOr7BYxnpMSthskmVNF2X9MhY3ZrcPunoXJOCKGZf+dvrhGaoLHhiEYVFPncnIYhV1RsTQSam3RA==
+"@ctsy/relation@^1.0.10", "@ctsy/relation@~1.0.8":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@ctsy/relation/-/relation-1.0.10.tgz#5fed3394873f4a9fb72cd6e1d6b1f2d38e1386c2"
+  integrity sha512-+URws0C50zvvOd5u+cKj/RCzUXN1KvKOqZJSQoDIYA5jNnpDrDcN/ZoPyKzJhofPNyVAtHrnyhMck+M2m+BfRg==
   dependencies:
-    "@ctsy/model" "^1.0.16"
+    "@ctsy/model" "^1.0.18"
     castle-function "^1.0.1"
     lodash "^4.17.11"
+    sequelize "4.43.0"
 
-"@ctsy/server_plugin@^1.0.0":
+"@ctsy/server_plugin@~1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@ctsy/server_plugin/-/server_plugin-1.0.0.tgz#6ac9053820179066a98ef70767d71656fe1f24cc"
   integrity sha512-7PBb/FGed9BFWKI9cjOq2uuASHhoFQB8gwfBdXOTj+ApYikKgwe9dSb3L1QLL5p0jIOGUC+vw6X9+J+83PNedw==
@@ -52,12 +54,12 @@
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.6.tgz#3e02972728c69248c2af08d60a48cbb8680fffdf"
   integrity sha512-Xqg/lIZMrUd0VRmSRbCAewtwGZiAk3mEUDvV4op1tGl+LvyPcb/MIOSxTl9z+9+J+R4/vpjiCAT4xeKzH9ji1w==
 
-"@types/geojson@^7946.0.7":
+"@types/geojson@~7946.0.7":
   version "7946.0.7"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.7.tgz#c8fa532b60a0042219cdf173ca21a975ef0666ad"
   integrity sha512-wE2v81i4C4Ol09RtsWFAqg3BUitWbHSpSlIo+bNdsCJijO9sjme+zm+73ZMCa/qMC8UEERxzGbvmr1cffo2SiQ==
 
-"@types/mz@^0.0.32":
+"@types/mz@~0.0.32":
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/@types/mz/-/mz-0.0.32.tgz#e8248b4e41424c052edc1725dd33650c313a3659"
   integrity sha512-cy3yebKhrHuOcrJGkfwNHhpTXQLgmXSv1BX+4p32j+VUQ6aP2eJ5cL7OvGcAQx75fCTFaAIIAKewvqL+iwSd4g==
@@ -74,10 +76,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.6.tgz#9cbfcb62c50947217f4d88d4d274cc40c22625a9"
   integrity sha512-Fvm24+u85lGmV4hT5G++aht2C5I4Z4dYlWZIh62FAfFO/TfzXtPpoLI6I7AuBWkIFqZCnhFOoTT7RjjaIL5Fjg==
 
-"@types/node@^11.13.9":
-  version "11.13.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.10.tgz#4df59e5966b56f512bac98898bcbee5067411f0f"
-  integrity sha512-leUNzbFTMX94TWaIKz8N15Chu55F9QSH+INKayQr5xpkasBQBRF3qQXfo3/dOnMU/dEIit+Y/SU8HyOjq++GwA==
+"@types/node@~11.13.9":
+  version "11.13.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.18.tgz#758ec2bf26339d3cc83da22676b64777d0c2befe"
+  integrity sha512-sMHdXLccscaxI+Hlzz58yLQue3lQyXP+6aQniDRi5oju3n0123kcjhicVGF20WF7cHiwJ2vxMbXc4skOclosoA==
 
 any-promise@^1.0.0:
   version "1.3.0"
@@ -89,7 +91,7 @@ bluebird@^3.4.6, bluebird@^3.5.0:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.4.tgz#d6cc661595de30d5b3af5fcedd3c0b3ef6ec5714"
   integrity sha512-FG+nFEZChJrbQ9tIccIfZJBz3J7mLrAhxakAbnrJWn8d7aKOC+LWifa0G+p4ZqKp4y13T7juYvdhq9NzKdsrjw==
 
-castle-function@^1.0.1, castle-function@^1.0.2:
+castle-function@^1.0.1, castle-function@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/castle-function/-/castle-function-1.0.2.tgz#2c906d3baf28edd3004b18f9b76b4ebb368613ca"
   integrity sha512-zN5o9mpEoKIC7w6xzPxjSkRDb7rs25vRelRcdIJU45tGX7luv8GLx8w50CKn+nakCaOQMtQaFIVZbqV7k4ndGw==
@@ -202,10 +204,10 @@ semver@^5.5.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.0.tgz#790a7cf6fea5459bac96110b29b60412dc8ff96b"
   integrity sha512-Ya52jSX2u7QKghxeoFGpLwCtGlt7j0oY9DYb5apt9nPlJ42ID+ulTXESnt/qAQcoSERyZ5sl3LDIOw0nAn/5DA==
 
-sequelize@^4.41.2:
-  version "4.44.0"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-4.44.0.tgz#b7371355c07ee8c2cc62d88cf0b34ac97b39908d"
-  integrity sha512-2XhS+koWZT9odyPVmq1xKiWMOIAYGgpUSlUJ6EbWjJCjXbkTKKfde0w5axJQcDjbPYCBvX5UOgID7xmPHL2xTw==
+sequelize@4.43.0:
+  version "4.43.0"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-4.43.0.tgz#41c36c7684b0ea23ca7be1c3af3d65f2309a4ca6"
+  integrity sha512-GkwGFVREKBf/ql6W6RXwXy1fzb/HOk0lmOBbcQrJMvJtB65Jfg7CUh+sENh0deuWk5s79JedgZJ/yEjvtzHXaQ==
   dependencies:
     bluebird "^3.5.0"
     cls-bluebird "^2.1.0"
