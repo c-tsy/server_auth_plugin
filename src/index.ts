@@ -80,6 +80,7 @@ export class Auth extends ModuleConfig {
         E_NO_CERTIFICATION: '无该认证信息',
         E_JUDGED: '该认证已被处理',
         E_ACCOUNT_FORBIDDEN: '账户已被禁用',
+        E_ACCOUNT_ERROR: '账号不符合规则',
     }
     Verify = {
         Account: /^[\w\b_-]{5+}$/,

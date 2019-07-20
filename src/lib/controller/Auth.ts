@@ -120,7 +120,7 @@ export default class AuthController extends BController {
 
         let Account = data.Account;
         if (!Account || !auth.Verify.Account.test(Account)) {
-            throw new Error(auth.Errors.E_ACCOUNT_FORBIDDEN);
+            throw new Error(auth.Errors.E_ACCOUNT_ERROR);
         }
 
         return !!(await this.M(Models.Account).where({ UID, Type: "PWD" }).limit(1).save({ Account }))
