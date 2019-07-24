@@ -24,6 +24,9 @@ export default class AuthController extends BController {
         if ('string' != typeof pwd) {
             throw new Error(auth.Errors.E_PARAMS)
         }
+        if (!auth.Verify.Account.test(account)) {
+            throw new Error(auth.Errors.E_ACCOUNT_ERROR)
+        }
         // let svcode = await this._session(auth.Fields.VCode);
         // if (svcode && svcode != vcode) {
         //     throw new Error(auth.Errors.E_VCODE);
@@ -141,6 +144,9 @@ export default class AuthController extends BController {
         if (auth.Limit.RegistMustPUID && !puid) {
             throw new Error(auth.Errors.E_NO_PUID)
         }
+        if (!auth.Verify.Account.test(account)) {
+            throw new Error(auth.Errors.E_ACCOUNT_ERROR)
+        }
         //需要判断什么情况下必须用户输入验证码或者其他验证方式
         let vcode = data[auth.Fields.VCode];
         if ('string' != typeof account) {
@@ -246,6 +252,9 @@ export default class AuthController extends BController {
         }
         await this._session(auth.Fields.VCode, null);
         let account = data[auth.Fields.Account];
+        if (!auth.Verify.Account.test(account)) {
+            throw new Error(auth.Errors.E_ACCOUNT_ERROR)
+        }
         if ('string' != typeof account) {
             throw new Error(auth.Errors.E_PARAMS)
         }
