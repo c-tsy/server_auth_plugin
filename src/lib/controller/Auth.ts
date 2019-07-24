@@ -125,7 +125,9 @@ export default class AuthController extends BController {
         if (!Account || !auth.Verify.Account.test(Account)) {
             throw new Error(auth.Errors.E_ACCOUNT_ERROR);
         }
-
+        if (await this.M(Models.Account).where({ Account }).find()) {
+            throw new Error(auth.Errors.E_ACCOUNT_EXISTED);
+        }
         return !!(await this.M(Models.Account).where({ UID, Type: "PWD" }).limit(1).save({ Account }))
     }
     /**
