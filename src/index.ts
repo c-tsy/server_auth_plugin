@@ -83,7 +83,7 @@ export class Auth extends ModuleConfig {
         E_ACCOUNT_ERROR: '账号不符合规则',
     }
     Verify = {
-        Account: /^[\w\b_-]{5+}$/,
+        Account: /^[\w\b_-]{5,}$/,
         PWD: /.{6,}/
     }
 
