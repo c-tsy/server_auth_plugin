@@ -314,4 +314,26 @@ export default class AuthController extends BController {
         // let loginedUID = await this.checkRule('');
 
     }
+    /**
+     * 重写session
+     */
+    async rsession() {
+        let UID = await this._session('UID');
+        if (UID > 0) {
+            let [User, UGIDs] = await Promise.all([
+                this.M(Models.Users).where({ UID }).find(),
+                this.M(Models.UserGroupLink).where({ UID }).getFields('UGID', true),
+            ])
+            let Groups = UGIDs.length > 0 ? await this.M(Models.UserGroup).where({ UGID: { in: UGIDs } }).select() : [];
+            User.UGIDs = UGIDs;
+            User.Groups = Groups;
+            User.Account = await this.M(Models.Account).where({ UID }).getFields('Account');
+            Hook.emit('rsession', HookWhen.Before, this._ctx, User);
+            await Promise.all([
+                this._session('User', User),
+                this._session('UGIDS', UGIDs),
+            ])
+        }
+        return true;
+    }
 }
