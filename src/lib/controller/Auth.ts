@@ -8,6 +8,7 @@ import Account from '../class/Account';
 import Pwd from '../class/Pwd';
 import UserGroupLink from '../class/UserGroupLink';
 import Hook, { HookWhen } from '@ctsy/hook';
+import { env } from 'process';
 export default class AuthController extends BController {
     /**
      * 登陆
@@ -184,6 +185,9 @@ export default class AuthController extends BController {
         reg.Sex = data.Sex || -1
         reg.Nick = data.Nick || '匿名'
         reg.PUID = puid || 1;
+        if (env.IMPORT && data.UID > 0) {
+            reg.UID = data.UID;
+        }
         await Hook.emit('Auth/regist', HookWhen.Before, this._ctx, data)
         // let r = await hook_check(this._ctx, 'Auth', HookType.before, 'regist', data)
         // if ('object' == typeof r) {
