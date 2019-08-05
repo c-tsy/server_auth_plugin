@@ -237,7 +237,7 @@ export default class AuthController extends BController {
             await this.rollback()
             throw new Error(auth.Errors.E_REG_ERROR);
         } finally {
-            await this._session(auth.Fields.VCode, null);
+            // await this._session(auth.Fields.VCode, null);
         }
     }
     /**
