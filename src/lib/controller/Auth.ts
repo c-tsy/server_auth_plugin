@@ -168,7 +168,6 @@ export default class AuthController extends BController {
         if (!svcode && auth.Limit.RegistMustVCode) {
             throw new Error(auth.Errors.E_VCODE)
         }
-        await this._session(auth.Fields.VCode, null);
         if (await this.M(Models.Account).where({ Account: account }).getFields('UID')) {
             //账号已被使用
             throw new Error(auth.Errors.E_ACCOUNT_USED);
@@ -176,7 +175,7 @@ export default class AuthController extends BController {
         /**
          * 检查推介人信息
          */
-        if (puid && !await this.M(Models.Users).where({ UID: puid }).getFields('UID')) {
+        if (auth.Limit.RegistMustPUID && puid && !await this.M(Models.Users).where({ UID: puid }).getFields('UID')) {
             throw new Error(auth.Errors.E_PUID_NOT_EXIST);
         }
         let lr = await this.M(Models.Levels).where({ UID: puid }).select();
@@ -228,6 +227,7 @@ export default class AuthController extends BController {
                 ])
                 await Hook.emit('Auth/regist', HookWhen.After, this._ctx, user)
                 await this.commit()
+                await this._session(auth.Fields.VCode, null);
                 return user;
             } else {
                 await this.rollback()
