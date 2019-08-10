@@ -11,6 +11,32 @@ import Hook, { HookWhen } from '@ctsy/hook';
 import { env } from 'process';
 export default class AuthController extends BController {
     /**
+     * 验证账号验证码
+     * @param param0 
+     */
+    async vcheck(data) {
+        let VAccount = data[auth.Fields.VAccount];
+        let VCode = data[auth.Fields.VCode];
+        let verify: any = this._session(auth.Fields.Verify)
+        if (verify) {
+            return [VAccount, VCode].join('/') == verify
+        }
+        if (VCode == await this._session(auth.Fields.VCode) && (auth.Limit.VerifyVAccount && VAccount == await this._session(auth.Fields.VAccount))) {
+            return true;
+        }
+
+        throw new Error(auth.Errors.E_VCODE)
+    }
+    /**
+     * 写入新版验证码规则
+     * @param data 
+     */
+    async vcode(data) {
+        let VAccount = data[auth.Fields.VAccount];
+        let VCode = data[auth.Fields.VCode];
+        await this._session(auth.Fields.Verify, [VAccount, VCode].join('/'))
+    }
+    /**
      * 登陆
      * @param data 
      */
@@ -32,7 +58,7 @@ export default class AuthController extends BController {
         // if (svcode && svcode != vcode) {
         //     throw new Error(auth.Errors.E_VCODE);
         // }
-        await this._session(auth.Fields.VCode, null);
+        // await this._session(auth.Fields.VCode, null);
         await Hook.emit('Auth/login', HookWhen.Before, this._ctx, data);
         // await hook_check(this._ctx, 'Auth', HookType.before, 'login', data)
         let UserAccount = await this.M(Models.Account).where({ Account: account, Status: 1, Type: "PWD" }).find();

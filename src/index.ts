@@ -2,11 +2,15 @@ import AuthController from "./lib/controller/Auth";
 import Configer, { Config } from './config'
 import { ModuleConfig } from '@ctsy/server_plugin';
 import { Password } from '@ctsy/crypto'
+import server from '@ctsy/server';
+server._modules['a'] = 'node_modules/@ctsy/server_auth_plugin/dist/lib';
+server._prefix['a'] = 'auth_';
 export class Auth extends ModuleConfig {
 
     Default: {
         UserGroupID: 1,
-        UserGroupMemo: ''
+        UserGroupMemo: '',
+        PUID: 1
     }
     /**
      * 密码Hash盐
@@ -38,6 +42,10 @@ export class Auth extends ModuleConfig {
          */
         VCode: 'VCode',
         /**
+         * 验证字段
+         */
+        VAccount: 'VAccount',
+        /**
          * 权限字段名称
          */
         Permission: 'Permission',
@@ -49,6 +57,10 @@ export class Auth extends ModuleConfig {
          * 推介人
          */
         PUID: 'PUID',
+        /**
+         * 第二种验证模式的验证字段
+         */
+        Verify: 'Verify'
     }
 
     Limit = {
@@ -57,7 +69,9 @@ export class Auth extends ModuleConfig {
          */
         RegistMustPUID: false,
 
-        RegistMustVCode: false
+        RegistMustVCode: false,
+
+        VerifyVAccount: false,
     }
 
     /**
