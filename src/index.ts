@@ -2,8 +2,9 @@ import AuthController from "./lib/controller/Auth";
 import Configer, { Config } from './config'
 import { ModuleConfig } from '@ctsy/server_plugin';
 import { Password } from '@ctsy/crypto'
-import server from '@ctsy/server';
+const server: any = require('@ctsy/server').default;
 server._modules['a'] = 'node_modules/@ctsy/server_auth_plugin/dist/lib';
+if (!server._prefix) { server._prefix = {} }
 server._prefix['a'] = 'auth_';
 export class Auth extends ModuleConfig {
 
