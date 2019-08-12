@@ -120,7 +120,23 @@ export default class AuthController extends BController {
         }
         return await this.rsession(u.UID)
     }
-
+    /**
+     * 三方登陆的绑定
+     * @param param0 
+     */
+    async abind({ Type, Account }) {
+        let UID = await this._session('UID');
+        if (!UID) {
+            throw new Error(auth.Errors.E_NOT_LOGIN);
+        }
+        if (await this.M(Models.Account).where({ UID, Type }).getFields('UID')) {
+            throw new Error(auth.Errors.E_ACCOUNT_BINDDED)
+        }
+        if (await this.M(Models.Account).where({ Type, Account }).getFields('UID')) {
+            throw new Error(auth.Errors.E_ACCOUNT_BINDDED)
+        }
+        return await this.M(Models.Account).add({ Type, Account, UID });
+    }
     /**
      * 获取我的权限
      */
