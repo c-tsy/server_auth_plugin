@@ -138,6 +138,20 @@ export default class AuthController extends BController {
         return await this.M(Models.Account).add({ Type, Account, UID });
     }
     /**
+     * 三方登陆的解绑
+     * @param param0 
+     */
+    async aunbind({ Type, Account }) {
+        let UID = await this._session('UID');
+        if (!UID) {
+            throw new Error(auth.Errors.E_NOT_LOGIN);
+        }
+        if (await this.M(Models.Account).where({ UID, Type, Account }).getFields('UID')) {
+            await this.M(Models.Account).where({ UID, Type, Account }).del();
+        }
+        return false;
+    }
+    /**
      * 获取我的权限
      */
     async getPermissions() {
