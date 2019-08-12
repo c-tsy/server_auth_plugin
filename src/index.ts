@@ -96,7 +96,8 @@ export class Auth extends ModuleConfig {
         E_JUDGED: '该认证已被处理',
         E_ACCOUNT_FORBIDDEN: '账户已被禁用',
         E_ACCOUNT_ERROR: '账号不符合规则',
-        E_ACCOUNT_EXISTED: '账号已存在'
+        E_ACCOUNT_EXISTED: '账号已存在',
+        E_ACCOUNT_BINDDED: "该账号已绑定"
     }
     Verify = {
         Account: /^[\w\b_-]{5,}$/,
