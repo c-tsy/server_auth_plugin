@@ -109,6 +109,18 @@ export default class AuthController extends BController {
             throw new Error(auth.Errors.E_PWD_ERROR)
         }
     }
+
+    /**
+     * 三方登陆认证
+     */
+    async alogin({ Type, Account }) {
+        let u = await this.M(Models.Account).where({ Type, Account }).find();
+        if (!u) {
+            throw new Error(auth.Errors.E_ACCOUNT_NOT_EXIST)
+        }
+        return await this.rsession(u.UID)
+    }
+
     /**
      * 获取我的权限
      */
@@ -347,8 +359,8 @@ export default class AuthController extends BController {
     /**
      * 重写session
      */
-    async rsession() {
-        let UID = await this._session('UID');
+    async rsession({ UID }) {
+        UID = UID || await this._session('UID');
         if (UID > 0) {
             let [User, UGIDs] = await Promise.all([
                 this.M(Models.Users).where({ UID }).find(),
@@ -363,6 +375,7 @@ export default class AuthController extends BController {
                 this._session('User', User),
                 this._session('UGIDS', UGIDs),
             ])
+            return User;
         }
         return true;
     }
