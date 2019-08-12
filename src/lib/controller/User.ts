@@ -2,7 +2,7 @@ import { Models } from '../iface/models';
 import auth from '../..'
 import { BController, CController } from '../lib/controller';
 import { array_columns } from 'castle-function'
-export default class User extends CController {
+export default class User extends BController {
     // _prefix = auth.Prefix;
     /**
      * 保存昵称
