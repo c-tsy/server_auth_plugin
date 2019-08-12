@@ -1,6 +1,6 @@
 {
   "name": "@ctsy/server_auth_plugin",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -19,7 +19,7 @@
     "@ctsy/crypto": "^1.0",
     "@ctsy/hook": "^0.0",
     "@ctsy/relation": "^1.0",
-    "@ctsy/server": "^1.0",
+    "@ctsy/server": "^1.0.7",
     "@ctsy/server_plugin": "^1.0",
     "castle-function": "^1.0"
   },
