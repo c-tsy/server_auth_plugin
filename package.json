@@ -24,7 +24,7 @@
     "castle-function": "^1.0"
   },
   "devDependencies": {
-    "@types/mz": "~0.0.32",
-    "@types/node": "~11.13.9"
+    "@types/mz": "^0.0.32",
+    "@types/node": "^11.13.9"
   }
 }

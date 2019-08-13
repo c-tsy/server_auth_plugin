@@ -2,7 +2,10 @@ import AuthController from "./lib/controller/Auth";
 import Configer, { Config } from './config'
 import { ModuleConfig } from '@ctsy/server_plugin';
 import { Password } from '@ctsy/crypto'
-const server: any = require('@ctsy/server').default;
+import hook, { HookWhen } from "@ctsy/hook";
+import server, { ServerHook } from '@ctsy/server'
+import { get_ctx } from "@ctsy/server/dist/utils";
+import Start from './lib/lib/start'
 server._modules['a'] = 'node_modules/@ctsy/server_auth_plugin/dist/lib';
 if (!server._prefix) { server._prefix = {} }
 server._prefix['a'] = 'auth_';
@@ -109,3 +112,9 @@ export class Auth extends ModuleConfig {
 }
 const auth = new Auth
 export default auth
+
+hook.regist(ServerHook.Start, HookWhen.After, 'auth_start', async (server, data: { Port: number }) => {
+    let ctx = await get_ctx();
+    let s = new Start(ctx)
+    await s.start();
+})
