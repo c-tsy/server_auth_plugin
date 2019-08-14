@@ -5,6 +5,7 @@ export default class Users extends Controller {
         return 'Name,Nick,Account'.split(',')
     }
     get _KeywordTable() {
+        return 'users';
         return 'UsersSearch'
     }
     async add() { }

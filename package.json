@@ -15,10 +15,12 @@
     "prepublish": "rm -rf dist && tsc"
   },
   "dependencies": {
-    "@ctsy/controller": "^1.0",
+    "@ctsy/cache": "^1.0.1",
+    "@ctsy/controller": "^1.0.27",
     "@ctsy/crypto": "^1.0",
     "@ctsy/hook": "^0.0",
-    "@ctsy/relation": "^1.0",
+    "@ctsy/model": "^1.0.21",
+    "@ctsy/relation": "^1.0.12",
     "@ctsy/server": "^1.0.7",
     "@ctsy/server_plugin": "^1.0",
     "castle-function": "^1.0"
