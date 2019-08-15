@@ -1,53 +1,110 @@
-import BaseController from '@ctsy/controller/dist/base_controller';
-import { Models } from "../iface/models"
-import auth from '../..'
-import { CController } from '../lib/controller';
-export default class Group extends CController{
-    /**
-     * 获取我的用户组
-     */
-    async my(data) {
-        let ugids = await this.M(Models.UserGroupLink).where({UID: data[auth.Fields.UID]}).select()
-        return ugids.length>0? await this.M(Models.UserGroup).where({UGID: {in: ugids}}).select() : []
-        
-    }
-    /**
-     * 增加用户组
-     * 已知该用户组的父组号名,继承组号
-     */
-    async addGroup(data:{Title: string, Sort: number, Memo: string}) {
-        let g = {}
-        g['Title'] = data.Title
-        g['Sort'] = data.Sort
-        g['Memo'] = data.Memo
-        g['PUGID'] = 0
-        g['EUGID'] = 0
-        // let g = {
-        //     Title: data.Title
-        // }
-        let group = await this.M(Models.UserGroup).add(g)
-        return group
-    }
+import { CController, BController } from '../lib/controller';
+import * as _ from 'lodash';
+import { Models } from '../iface/models';
+import { array_key_set } from 'castle-function';
+const cache: any = {
+    // list: [],
+    // tree: []
+}
+/**
+ * 用户组操作
+ */
+export default class Group extends BController {
 
     /**
-     * 查询所有用户组
+     * 获取用户组信息
      */
-    async findGroups() {
-        return await this.M(Models.UserGroup).select()
-    }
+    async all({ Type }) {
+        Type = Type || 'tree';
+        if (cache[Type]) {
+            return cache[Type];
+        }
+        let alls = array_key_set(await this.M(Models.UserGroup).fields('UGID,Title,PUGID,Memo').order('UGID,Sort').select(), 'PUGID', true);
+        let rs = [];
 
-    /**
-     * 查询用户组
-     * @param data 
-     */
-    async findGroup(data: {UGID: number}) {
-        return await this.M(Models.UserGroup).where({UGID: data.UGID}).find()
-    }
+        let sort = (UGID: number) => {
+            if (!alls[UGID]) {
+                return;
+            }
+            for (let x of alls[UGID]) {
+                rs.push(x);
+                if (alls[x.UGID]) sort(x.UGID);
+            }
+        };
 
+        for (let x of alls[0]) {
+            rs.push(x);
+            let UGID = x.UGID;
+            sort(UGID);
+        }
+        cache['list'] = _.cloneDeep(rs);
+        let tree = {},
+            levels = [];
+        for (let x of rs) {
+            x.Subs = {};
+            if (x.PUGID == 0) {
+                tree[x.UGID] = x;
+                levels = [];
+            } else {
+                if (levels[levels.length - 1] != x.PUGID) {
+                    if (levels.includes(x.PUGID)) {
+                        levels = levels.slice(0, levels.indexOf(x.PUGID) + 1)
+                    } else
+                        levels.push(x.PUGID);
+                }
+                // console.log(levels, x.UGID, x.PUGID, tree);
+                if (levels.length == 0) {
+                    continue;
+                }
+                let p = tree[levels[0]];
+                for (let i = 1; i < levels.length; i++) {
+                    let o = levels[i];
+                    p = p.Subs[o];
+                }
+                p.Subs[x.UGID] = x;
+            }
+        }
+        cache['tree'] = tree;
+        return cache[Type];
+    }
     /**
-     * 删除用户组
+     * 保存
+     * @param param0 
      */
-    async delGroup(data: {UGID: number}) {
-        return await this.M(Models.UserGroup).where({UGID: data.UGID}).del()
+    async save({ UGID, Data }) {
+        if (Object.keys(Data).length == 0) { return false; }
+        if (!(UGID > 0)) { return false; }
+        return await this.M(Models.UserGroup).where({ UGID }).limit(1).save(Data);
+    }
+    /**
+     * 添加
+     * @param param0 
+     */
+    async add({ Title, Memo, Sort, PUGID }) {
+        return await this.M(Models.UserGroup).add({ Title, Memo, Sort, PUGID });
+    }
+    /**
+     * 用户分组
+     * @param param0 
+     */
+    async link({ UGID, UIDs }) {
+        let existed: number[] = await this.M(Models.UserGroupLink).where({ UGID, UID: { in: UIDs } }).getFields('UID', true) || [];
+        let data = [];
+        for (let x of UIDs) {
+            if (!existed.includes(x)) {
+                data.push({ UGID, UID: x });
+            }
+        }
+        if (data.length > 0) {
+            await this.M(Models.UserGroupLink).addAll(data);
+        }
+        return true;
+    }
+    /**
+     * 删除用户分组信息
+     * @param param0 
+     */
+    async unlink({ UGID, UIDs }) {
+        return await this.M(Models.UserGroupLink).where({ UGID, UID: { in: UIDs } }).del();
     }
 }
