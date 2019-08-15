@@ -64,6 +64,22 @@ export default class UserGroup extends BController {
         return cache[Type];
     }
     /**
+     * 保存
+     * @param param0 
+     */
+    async save({ UGID, Data }) {
+        if (Object.keys(Data).length == 0) { return false; }
+        if (!(UGID > 0)) { return false; }
+        return await this.M(Models.UserGroup).where({ UGID }).limit(1).save(Data);
+    }
+    /**
+     * 添加
+     * @param param0 
+     */
+    async add({ Title, Memo, Sort, PUGID }) {
+        return await this.M(Models.UserGroup).add({ Title, Memo, Sort, PUGID });
+    }
+    /**
      * 用户分组
      * @param param0 
      */
