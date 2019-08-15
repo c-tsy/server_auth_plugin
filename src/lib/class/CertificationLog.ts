@@ -10,12 +10,12 @@
   * 审核备注 Memo 字符250(char(250))
 */
 export default class CertificationLog {
-    public CLID: number = 0;
-    public CID: number = 0;
-    public UID: number = 0;
-    public CTime: Date = new Date;
-    public Data: string = "";
-    public Result: number = 0;
-    public JTime: Date = new Date;
-    public Memo: string = "";
+  public CLID: number = 0;
+  public CID: number = 0;
+  public UID: number = 0;
+  public CTime: Date = new Date;
+  public Data: string = "";
+  public Result: number = 0;
+  public JTime: Date = new Date;
+  public Memo: string = "";
 }

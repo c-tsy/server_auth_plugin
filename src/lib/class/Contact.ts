@@ -5,10 +5,10 @@
   * 值 V 字符50(char(50))
   * 配置 C 字符250(char(250))
 */
-export default class Contact{
-        
-    public UID:number=0;    
-    public T:string="";    
-    public V:string="";    
-    public C:string="";
+export default class Contact {
+
+  public UID: number = 0;
+  public T: string = "";
+  public V: string = "";
+  public C: string = "";
 }

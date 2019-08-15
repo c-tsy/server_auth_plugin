@@ -6,11 +6,11 @@
   * PRGID PRGID 序号(bigint)
   * 组序 Sort 序号(bigint)
 */
-export default class RuleGroup{
-        
-    public RGID:number=0;    
-    public Title:string="";    
-    public Memo:string="";    
-    public PRGID:number=0;    
-    public Sort:number=0;
+export default class RuleGroup {
+
+  public RGID: number = 0;
+  public Title: string = "";
+  public Memo: string = "";
+  public PRGID: number = 0;
+  public Sort: number = 0;
 }

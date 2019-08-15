@@ -8,13 +8,13 @@
   * 备注 Memo 字符250(char(250))
   * 排序 Sort 序号(bigint)
 */
-export default class Rule{
-        
-    public RID:number=0;    
-    public RGID:number=0;    
-    public Title:string="";    
-    public Type:string="";    
-    public Rule:string="";    
-    public Memo:string="";    
-    public Sort:number=0;
+export default class Rule {
+
+  public RID: number = 0;
+  public RGID: number = 0;
+  public Title: string = "";
+  public Type: string = "";
+  public Rule: string = "";
+  public Memo: string = "";
+  public Sort: number = 0;
 }
