@@ -15,7 +15,7 @@ export default class UserGroup extends BController {
         if (cache[Type]) {
             return cache[Type];
         }
-        let alls = array_key_set(await this.M(Models.UserGroup).fields('UGID,Title,PUGID,Sort,Memo').order('UGID,Sort').select(), 'PUGID', true);
+        let alls = array_key_set(await this.M(Models.UserGroup).fields('UGID,Title,PUGID,Memo').order('UGID,Sort').select(), 'PUGID', true);
         let rs = [];
 
         let sort = (UGID: number) => {
@@ -63,6 +63,28 @@ export default class UserGroup extends BController {
         cache['tree'] = tree;
         return cache[Type];
     }
-    async link() { }
-    async unlink() { }
+    /**
+     * 用户分组
+     * @param param0 
+     */
+    async link({ UGID, UIDs }) {
+        let existed: number[] = await this.M(Models.UserGroupLink).where({ UGID, UID: { in: UIDs } }).getFields('UID', true) || [];
+        let data = [];
+        for (let x of UIDs) {
+            if (!existed.includes(x)) {
+                data.push({ UGID, UID: x });
+            }
+        }
+        if (data.length > 0) {
+            await this.M(Models.UserGroupLink).addAll(data);
+        }
+        return true;
+    }
+    /**
+     * 删除用户分组信息
+     * @param param0 
+     */
+    async unlink({ UGID, UIDs }) {
+        return await this.M(Models.UserGroupLink).where({ UGID, UID: { in: UIDs } }).del();
+    }
 }
