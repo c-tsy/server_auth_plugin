@@ -1,6 +1,6 @@
 {
   "name": "@ctsy/server_auth_plugin",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -15,13 +15,13 @@
     "prepublish": "rm -rf dist && tsc"
   },
   "dependencies": {
-    "@ctsy/cache": "^1.0.1",
-    "@ctsy/controller": "^1.0.27",
+    "@ctsy/cache": "^1.0",
+    "@ctsy/controller": "^1.0",
     "@ctsy/crypto": "^1.0",
     "@ctsy/hook": "^0.0",
-    "@ctsy/model": "^1.0.21",
-    "@ctsy/relation": "^1.0.12",
-    "@ctsy/server": "^1.0.7",
+    "@ctsy/model": "^1.0",
+    "@ctsy/relation": "^1.0",
+    "@ctsy/server": "^1.0",
     "@ctsy/server_plugin": "^1.0",
     "castle-function": "^1.0"
   },

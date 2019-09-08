@@ -1,8 +1,8 @@
 import { CController, BController } from '../lib/controller';
 import * as _ from 'lodash';
 import { Models } from '../iface/models';
-import { array_key_set } from 'castle-function';
-const cache: any = {
+import { array_key_set, array_columns } from 'castle-function';
+var cache: any = {
     // list: [],
     // tree: []
 }
@@ -43,6 +43,7 @@ export default class Group extends BController {
         for (let x of rs) {
             x.Subs = {};
             if (x.PUGID == 0) {
+                x.L = 0;
                 tree[x.UGID] = x;
                 levels = [];
             } else {
@@ -61,6 +62,8 @@ export default class Group extends BController {
                     let o = levels[i];
                     p = p.Subs[o];
                 }
+                delete x.PUGID;
+                x.L = levels.length;
                 p.Subs[x.UGID] = x;
             }
         }
@@ -74,14 +77,34 @@ export default class Group extends BController {
     async save({ UGID, Data }) {
         if (Object.keys(Data).length == 0) { return false; }
         if (!(UGID > 0)) { return false; }
-        return await this.M(Models.UserGroup).where({ UGID }).limit(1).save(Data);
+        let r = await this.M(Models.UserGroup).where({ UGID }).limit(1).save(Data);
+        if (r > 0) {
+            cache = {}
+        }
+        return r;
+    }
+    /**
+     * 获取组用户信息
+     * @param param0 
+     */
+    async members({ UGID, P, N }) {
+        let { rows, count } = await this.M(Models.UserGroupLink).where({ UGID }).page(P || 1, N || 10).fields('UID').selectAndCount();
+        return {
+            T: count,
+            L: await this.R(Models.Users).where({ UID: { in: array_columns(rows, 'UID') } }).select(),
+            P,
+            N,
+            R: {}
+        }
     }
     /**
      * 添加
      * @param param0 
      */
     async add({ Title, Memo, Sort, PUGID }) {
-        return await this.M(Models.UserGroup).add({ Title, Memo, Sort, PUGID });
+        let r = await this.M(Models.UserGroup).add({ Title, Memo, Sort, PUGID });
+        cache = {}
+        return r;
     }
     /**
      * 用户分组
