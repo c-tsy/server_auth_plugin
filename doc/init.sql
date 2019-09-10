@@ -175,8 +175,8 @@ INSERT INTO `auth_user_group_rule_link` VALUES (3, 1, 3,15,15,15);
 DROP TABLE IF EXISTS `auth_users`;
 CREATE TABLE `auth_users`  (
   `UID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Name` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Nick` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Name` char(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Nick` char(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Sex` tinyint(1) NOT NULL,
   `Status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '-1禁用，1正常',
   `Channel` char(20) NOT NULL DEFAULT "",
