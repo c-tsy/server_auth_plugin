@@ -32,7 +32,7 @@ CREATE TABLE `auth_contact`  (
   `V` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `C` char(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`UID`, `Nick`, `T`, `V`) USING BTREE,
-  CONSTRAINT `FK_Reference_8` FOREIGN KEY (`UID`) REFERENCES `auth_users` (`UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_auth_8` FOREIGN KEY (`UID`) REFERENCES `auth_users` (`UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用于支持各种通信方式的验证、通知等，需要配置C字段，根据不同人和不同的驱动来定义' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -43,7 +43,7 @@ CREATE TABLE `auth_pwd`  (
   `UID` bigint(20) UNSIGNED NOT NULL,
   `PWD` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`UID`) USING BTREE,
-  CONSTRAINT `FK_Reference_7` FOREIGN KEY (`UID`) REFERENCES `auth_users` (`UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_auth_7` FOREIGN KEY (`UID`) REFERENCES `auth_users` (`UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -189,7 +189,7 @@ CREATE TABLE `auth_users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `auth_users` VALUES (1, 'admin', 'admin', 1, 1,"",1);
+INSERT INTO `auth_users` VALUES (1, 'admin', 'admin', 1, 1,"",1,0);
 
 -- ----------------------------
 -- View structure for login_check
