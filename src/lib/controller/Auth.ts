@@ -14,27 +14,34 @@ export default class AuthController extends BController {
      * 验证账号验证码
      * @param param0 
      */
-    async vcheck(data) {
+    async vcheck(data, remove: boolean = true) {
         let VAccount = data[auth.Fields.VAccount];
         let VCode = data[auth.Fields.VCode];
         let verify: any = this._session(auth.Fields.Verify)
         if (verify) {
-            return [VAccount, VCode].join('/') == verify
+            let p = verify.split('/');
+            if (p[2] > 0 && Date.now() > p[2]) {
+                if (remove)
+                    this._session(auth.Fields.Verify, null)
+                throw new Error(auth.Errors.E_VCODE);
+            }
+            return VAccount == p[0] && VCode == p[1];
         }
         if (VCode == await this._session(auth.Fields.VCode) && (auth.Limit.VerifyVAccount && VAccount == await this._session(auth.Fields.VAccount))) {
+            if (remove)
+                this._session(auth.Fields.Verify, null)
             return true;
         }
-
         throw new Error(auth.Errors.E_VCODE)
     }
     /**
      * 写入新版验证码规则
      * @param data 
      */
-    async vcode(data) {
+    async vcode(data, expire: number = 0) {
         let VAccount = data[auth.Fields.VAccount];
         let VCode = data[auth.Fields.VCode];
-        await this._session(auth.Fields.Verify, [VAccount, VCode].join('/'))
+        await this._session(auth.Fields.Verify, [VAccount, VCode, expire > 0 ? Date.now() + expire : 0].join('/'))
     }
     /**
      * 登陆
@@ -179,11 +186,8 @@ export default class AuthController extends BController {
      */
     async changeAccount(data) {
 
-        let VCode = data[auth.Fields.VCode];
-        let SVCode = await this._session(auth.Fields.VCode);
-        if (VCode != SVCode) {
-            throw new Error(auth.Errors.E_VCODE);
-        }
+        // let VCode = data[auth.Fields.VCode];
+        await this.vcheck(data, true);
 
         let UID = await this._session('UID');
         if (UID <= 1) {
@@ -229,12 +233,8 @@ export default class AuthController extends BController {
         if (!auth.Verify.PWD.test(pwd)) {
             throw new Error(auth.Errors.E_PARAMS_FAILD)
         }
-        let svcode = await this._session(auth.Fields.VCode);
-        if (svcode && svcode != vcode) {
-            throw new Error(auth.Errors.E_VCODE);
-        }
-        if (!svcode && auth.Limit.RegistMustVCode) {
-            throw new Error(auth.Errors.E_VCODE)
+        if (auth.Limit.RegistMustVCode) {
+            await this.vcheck(data);
         }
         if (await this.M(Models.Account).where({ Account: account }).getFields('UID')) {
             //账号已被使用
@@ -320,11 +320,12 @@ export default class AuthController extends BController {
         if (!auth.Verify.PWD.test(pwd)) {
             throw new Error(auth.Errors.E_PARAMS_FAILD)
         }
-        let vcode = data[auth.Fields.VCode];
-        if (vcode !== await this._session(auth.Fields.VCode)) {
-            throw new Error(auth.Errors.E_VCODE);
-        }
-        await this._session(auth.Fields.VCode, null);
+        // let vcode = data[auth.Fields.VCode];
+        // if (vcode !== await this._session(auth.Fields.VCode)) {
+        //     throw new Error(auth.Errors.E_VCODE);
+        // }
+        // await this._session(auth.Fields.VCode, null);
+        await this.vcheck(data)
         let account = data[auth.Fields.Account];
         if (!auth.Verify.Account.test(account)) {
             throw new Error(auth.Errors.E_ACCOUNT_ERROR)
