@@ -9,6 +9,7 @@ import Pwd from '../class/Pwd';
 import UserGroupLink from '../class/UserGroupLink';
 import Hook, { HookWhen } from '@ctsy/hook';
 import { env } from 'process';
+import server from '@ctsy/server';
 export default class AuthController extends BController {
     /**
      * 验证账号验证码
@@ -393,6 +394,8 @@ export default class AuthController extends BController {
     async rsession({ UID }) {
         UID = UID || await this._session('UID');
         if (UID > 0) {
+            this._prefix = 'auth_';
+            this._ctx.path = server._modules['a'];
             let [User, UGIDs] = await Promise.all([
                 this.M(Models.Users).where({ UID }).find(),
                 this.M(Models.UserGroupLink).where({ UID }).getFields('UGID', true),
@@ -403,6 +406,7 @@ export default class AuthController extends BController {
             User.Account = await this.M(Models.Account).where({ UID }).getFields('Account');
             Hook.emit('rsession', HookWhen.Before, this._ctx, User);
             await Promise.all([
+                this._session('UID', UID),
                 this._session('User', User),
                 this._session('UGIDS', UGIDs),
             ])
