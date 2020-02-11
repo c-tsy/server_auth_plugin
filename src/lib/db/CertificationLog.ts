@@ -6,7 +6,7 @@ import { DbDataType } from "@ctsy/model";
   * UID UID 序号(bigint)
   * 申请时间 CTime 时间日期(datetime)
   * 申请数据 Data 字符250(char(250))
-  * 审核结果 Result 状态值(tinyint(1))
+  * 审核结果 Result 状态值(tinyint)
   * 审核时间 JTime 时间日期(datetime)
   * 审核备注 Memo 字符250(char(250))
 */
@@ -47,7 +47,7 @@ export default {
         allowNull:false
     },    
     Result:{
-        type:DbDataType.tinyint(1),
+        type:DbDataType.tinyint,
         primaryKey:false,
         autoIncrement:false,
         defaultValue:0,

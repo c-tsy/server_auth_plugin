@@ -28,21 +28,21 @@ export default {
         allowNull: false
     },
     U: {
-        type: DbDataType.tinyint(1),
+        type: DbDataType.tinyint,
         primaryKey: false,
         autoIncrement: false,
         defaultValue: 0,
         allowNull: false
     },
     G: {
-        type: DbDataType.tinyint(1),
+        type: DbDataType.tinyint,
         primaryKey: false,
         autoIncrement: false,
         defaultValue: 0,
         allowNull: false
     },
     O: {
-        type: DbDataType.tinyint(1),
+        type: DbDataType.tinyint,
         primaryKey: false,
         autoIncrement: false,
         defaultValue: 0,

@@ -1,6 +1,6 @@
 {
   "name": "@ctsy/server_auth_plugin",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -11,22 +11,21 @@
   "repository": "https://github.com/c-tsy/server_auth_plugin",
   "author": "CastleMY <490523604@qq.com>",
   "license": "MIT",
-  "scripts": {
-    "prepublish": "rm -rf dist && tsc"
-  },
+  "scripts": {},
   "dependencies": {
-    "@ctsy/cache": "^1.0",
-    "@ctsy/controller": "^1.0",
-    "@ctsy/crypto": "^1.0",
-    "@ctsy/hook": "^0.0",
-    "@ctsy/model": "^1.0",
-    "@ctsy/relation": "^1.0",
-    "@ctsy/server": "^1.0",
-    "@ctsy/server_plugin": "^1.0",
-    "castle-function": "^1.0"
+    "@ctsy/cache": "*",
+    "@ctsy/config": "*",
+    "@ctsy/controller": "*",
+    "@ctsy/crypto": "*",
+    "@ctsy/hook": "*",
+    "@ctsy/model": "*",
+    "@ctsy/relation": "*",
+    "@ctsy/server": "*",
+    "@ctsy/server_plugin": "*",
+    "castle-function": "*"
   },
   "devDependencies": {
-    "@types/mz": "^0.0.32",
-    "@types/node": "^11.13.9"
+    "@types/mz": "*",
+    "@types/node": "*"
   }
 }

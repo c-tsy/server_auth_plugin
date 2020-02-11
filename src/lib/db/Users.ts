@@ -4,8 +4,8 @@ import { DbDataType } from "@ctsy/model";
   * 用户编号 UID 大数值自增(bigint)
   * 姓名 Name 字符50(char(50))
   * 昵称 Nick 字符50(char(50))
-  * 性别 Sex 状态值(tinyint(1))
-  * Status Status 状态值(tinyint(1))
+  * 性别 Sex 状态值(tinyint)
+  * Status Status 状态值(tinyint)
 */
 export default {
     UID: {
@@ -30,14 +30,14 @@ export default {
         allowNull: false
     },
     Sex: {
-        type: DbDataType.tinyint(1),
+        type: DbDataType.tinyint,
         primaryKey: false,
         autoIncrement: false,
         defaultValue: 0,
         allowNull: false
     },
     Status: {
-        type: DbDataType.tinyint(1),
+        type: DbDataType.tinyint,
         primaryKey: false,
         autoIncrement: false,
         defaultValue: 1,
@@ -51,14 +51,14 @@ export default {
         allowNull: false
     },
     PUID: {
-        type: DbDataType.bigint(20),
+        type: DbDataType.bigint,
         primaryKey: false,
         autoIncrement: false,
         defaultValue: 1,
         allowNull: false
     },
     TNum: {
-        type: DbDataType.bigint(20),
+        type: DbDataType.bigint,
         primaryKey: false,
         autoIncrement: false,
         defaultValue: 1,

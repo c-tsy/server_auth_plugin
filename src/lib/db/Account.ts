@@ -4,7 +4,7 @@ import { DbDataType } from "@ctsy/model";
   * 用户编号 UID 大整数(bigint)
   * Account Account 字符50(char(50))
   * 类型 Type 字符50(char(50))
-  * 状态 Status 状态值(tinyint(1))
+  * 状态 Status 状态值(tinyint)
 */
 export default {    
     UID:{
@@ -29,7 +29,7 @@ export default {
         allowNull:false
     },    
     Status:{
-        type:DbDataType.tinyint(1),
+        type:DbDataType.tinyint,
         primaryKey:false,
         autoIncrement:false,
         defaultValue:1,
