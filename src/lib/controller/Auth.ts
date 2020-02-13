@@ -18,7 +18,7 @@ export default class AuthController extends BController {
     async vcheck(data, remove: boolean = true) {
         let VAccount = data[auth.Fields.VAccount];
         let VCode = data[auth.Fields.VCode];
-        let verify: any = this._session(auth.Fields.Verify)
+        let verify: any = await this._session(auth.Fields.Verify)
         if (verify) {
             let p = verify.split('/');
             if (p[2] > 0 && Date.now() > p[2]) {
